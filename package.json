@@ -1,0 +1,12 @@
+{
+    "name": "anitomy-js",
+    "version": "0.0.1",
+    "description": "Node.js wrapper for anitomy",
+    "main": "index.js",
+    "dependencies": {
+        "nan": "^2.0.0"
+    },
+    "scripts": {
+        "test": "node index.js"
+    }
+}
