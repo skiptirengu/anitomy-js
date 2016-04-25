@@ -3,7 +3,7 @@
         {
             "target_name": "anitomy",
             "sources": [
-                "anitomy.cpp"
+                "anitomy_wrapper.cpp"
             ],
             "include_dirs": [
                 "<!(node -e \"require('nan')\")",

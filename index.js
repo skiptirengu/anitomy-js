@@ -1,3 +1,3 @@
-var addon = require('./build/Release/pow');
+var anitomy = require('./build/Release/anitomy');
 
-console.log(addon.pow(4, 2));  
+console.log(anitomy.test());  
