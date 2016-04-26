@@ -53,6 +53,11 @@ namespace anitomy_js {
         return object;
     }
     
+    // v8::Value DoParse(v8::Isolate* isolate, v8::Value& input, bool is_string) {
+    //     v8::Local<v8::Array> output_array = v8::Array::New(isolate);
+    //     v8::Local<v8::Array> input_array = v8::Array::New(isolate);
+    // }
+    
     void ParseSync(const Nan::FunctionCallbackInfo<v8::Value>& args) {
         v8::Isolate* isolate = args.GetIsolate();
 
@@ -61,10 +66,15 @@ namespace anitomy_js {
             return;
         }
         
-        anitomy::Anitomy anitomy;
-        anitomy.Parse(ToWideString(args[0]));  
-
-        args.GetReturnValue().Set(BuildObject(anitomy.elements(), isolate));
+        if (!args[0]->IsArray() && !args[0]->IsString()) {
+            isolate->ThrowException(v8::Exception::TypeError(v8::String::NewFromUtf8(isolate, "Wrong data type")));
+            return;
+        } 
+        
+        v8::Local<v8::Array> array_output = v8::Array::New(isolate, 1);
+        array_output->Set(0, v8::Local<v8::Array>::Cast(args[0]));
+        
+        args.GetReturnValue().Set(array_output);
     }
 
     void ParseAsync(const Nan::FunctionCallbackInfo<v8::Value>& args) {
@@ -74,6 +84,11 @@ namespace anitomy_js {
             isolate->ThrowException(v8::Exception::TypeError(v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
             return;
         }   
+        
+        if (!args[0]->IsArray() && !args[0]->IsString()) {
+            isolate->ThrowException(v8::Exception::TypeError(v8::String::NewFromUtf8(isolate, "Wrong data type")));
+            return;
+        }
                
         Work* work = new Work();
         work->request.data = work;
