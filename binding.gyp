@@ -20,7 +20,7 @@
                 "lib/anitomy/anitomy/token.h",
                 "lib/anitomy/anitomy/tokenizer.cpp",
                 "lib/anitomy/anitomy/tokenizer.h",
-                "anitomy_wrapper.cpp"
+                "anitomy_js.cpp"
             ],
             "include_dirs": [
                 "<!(node -e \"require('nan')\")",
