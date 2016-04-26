@@ -1,6 +1,7 @@
 #include <nan.h>
 #include <anitomy/anitomy.h>
 #include <iostream>
+#include <string>
 
 void Test(const Nan::FunctionCallbackInfo<v8::Value>& args) {
     v8::Isolate* isolate = args.GetIsolate();
@@ -15,11 +16,10 @@ void Test(const Nan::FunctionCallbackInfo<v8::Value>& args) {
     }
     std::wcout << std::endl;
 
-    // You can access values directly by using get() and get_all() methods
-    std::wcout << elements.get(anitomy::kElementAnimeTitle)    << L" #"   <<
-                  elements.get(anitomy::kElementEpisodeNumber) << L" by " <<
-                  elements.get(anitomy::kElementReleaseGroup)  << std::endl;
-                
+    std::wstring ws(elements.get(anitomy::kElementAnimeTitle).c_str());
+    std::string str(ws.begin(), ws.end());
+    std::cout << str << std::endl;
+    
     args.GetReturnValue().Set(v8::String::NewFromUtf8(isolate, "Hello world!"));
 }
 
