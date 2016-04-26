@@ -18,9 +18,8 @@ void Test(const Nan::FunctionCallbackInfo<v8::Value>& args) {
 
     std::wstring ws(elements.get(anitomy::kElementAnimeTitle).c_str());
     std::string str(ws.begin(), ws.end());
-    std::cout << str << std::endl;
     
-    args.GetReturnValue().Set(v8::String::NewFromUtf8(isolate, "Hello world!"));
+    args.GetReturnValue().Set(v8::String::NewFromUtf8(isolate, str.c_str()));
 }
 
 void Init(v8::Local<v8::Object> exports) {  
