@@ -16,24 +16,3 @@ void Init(v8::Local<v8::Object> exports) {
 }
 
 NODE_MODULE(anitomy, Init)  
-
-/**
-TODO Add these to bindings.gyp
-"anitomy.cpp",
-"anitomy.h",
-"element.cpp",
-"element.h",
-"keyword.cpp",
-"keyword.h",
-"options.h",
-"parser.cpp",
-"parser.h",
-"parser_helper.c",
-"parser_number.c",
-"string.cpp",
-"string.h",
-"token.cpp",
-"token.h",
-"tokenizer.cpp",
-"tokenizer.h"
-**/
