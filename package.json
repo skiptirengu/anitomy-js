@@ -1,12 +1,25 @@
 {
-    "name": "anitomy-js",
-    "version": "0.0.1",
-    "description": "Node.js wrapper for anitomy",
-    "main": "index.js",
-    "dependencies": {
-        "nan": "^2.0.0"
-    },
-    "scripts": {
-        "test": "node index.js"
+  "name": "anitomy-js",
+  "version": "0.1.0",
+  "description": "Node.js wrapper for anitomy",
+  "license": "MPL",
+  "contributors": [
+    {
+      "name": "Thiago Oliveira",
+      "email": "thiago.oliveira.gt14@gmail.com"
     }
+  ],
+  "keywords": [
+    "anitomy",
+    "anitomy-js"
+  ],
+  "dependencies": {
+    "nan": "^2.0.0"
+  },
+  "scripts": {
+    "test": "node index.js"
+  },
+  "devDependencies": {
+    "mocha": "^2.4.5"
+  }
 }
