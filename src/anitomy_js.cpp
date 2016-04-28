@@ -10,30 +10,37 @@
 
 namespace anitomyJs {
     
-    void AnitomyJs::SetIsolate(v8::Isolate* isolate) {
-        isolate_ = isolate;
-    }
-    
-    v8::Isolate* AnitomyJs::GetIsolate() {
-        return isolate_;
-    }
-    
-    v8::Local<v8::Object> AnitomyJs::Parse(v8::Local<v8::String> value) {
-        anitomy_.Parse(ToWideString(value));
-        return BuildObject(anitomy_.elements());
-    }
-    
-    v8::Local<v8::Array> AnitomyJs::Parse(v8::Local<v8::Array> value) {
-        unsigned int length = value->Length();
-        v8::Local<v8::Array> result_list = v8::Array::New(isolate_, length);
-        
-        for (unsigned int i = 0; i < length; i++) {
-            anitomy_.Parse(ToWideString(value->Get(i)));
-            v8::Local<v8::Object> object = BuildObject(anitomy_.elements());
-            result_list->Set(i, object);
+    void AnitomyJs::SetInput(v8::Local<v8::Value> value) {
+        is_batch_parse_ = value->IsArray();
+        if (is_batch_parse_) {
+            v8::Local<v8::Array> input = v8::Local<v8::Array>::Cast(value);
+            for (unsigned int i = 0; i < input->Length(); i++) input_.push_back(ToWideString(input->Get(i)));
+        } else {
+            input_.push_back(ToWideString(value));
         }
-        
-        return result_list;
+    }
+    
+    void AnitomyJs::Parse() {
+        for (std::wstring str : input_) {
+            anitomy_.Parse(str);
+            parsed_.push_back(anitomy_.elements());
+        }
+    }
+    
+    std::vector<anitomy::Elements> AnitomyJs::Parsed() {
+        return parsed_;
+    }
+    
+    // TODO For ~desu's sake, stop doing this flag shit
+    v8::Local<v8::Value> AnitomyJs::ParsedResult(v8::Isolate* isolate) {
+        v8::Local<v8::Array> output = v8::Array::New(isolate, parsed_.size());
+        unsigned int index = 0;
+        for (anitomy::Elements element : parsed_) {
+            output->Set(index, BuildObject(element, isolate));
+            index++;
+        }
+        if (is_batch_parse_) return output;
+        return output->Get(0);
     }
     
     std::wstring AnitomyJs::ToWideString(v8::Local<v8::Value> str) {
@@ -47,40 +54,41 @@ namespace anitomyJs {
         return std::string(ws_value.begin(), ws_value.end());
     }
     
-    void AnitomyJs::SetEntry(v8::Local<v8::Object>& object, const char* entry,
+    void AnitomyJs::SetEntry(v8::Local<v8::Object>& object, v8::Isolate* isolate, const char* entry,
                              anitomy::Elements& elements, anitomy::ElementCategory pos) {
-        object->Set(v8::String::NewFromUtf8(isolate_, entry), 
-                    v8::String::NewFromUtf8(isolate_, ToStr(elements.get(pos)).c_str()));;
+        object->Set(v8::String::NewFromUtf8(isolate, entry), 
+                    v8::String::NewFromUtf8(isolate, ToStr(elements.get(pos)).c_str()));;
     }
     
-    v8::Local<v8::Object> AnitomyJs::BuildObject(anitomy::Elements& elements) {
-        v8::Local<v8::Object> object = v8::Object::New(isolate_);
-        SetEntry(object, "anime_season", elements, anitomy::kElementAnimeSeason);
-        SetEntry(object, "season_prefix", elements, anitomy::kElementAnimeSeasonPrefix);
-        SetEntry(object, "anime_title", elements, anitomy::kElementAnimeTitle);
-        SetEntry(object, "anime_type", elements, anitomy::kElementAnimeType);
-        SetEntry(object, "anime_year", elements, anitomy::kElementAnimeYear);
-        SetEntry(object, "audio_term", elements, anitomy::kElementAudioTerm);
-        SetEntry(object, "device_compatibility", elements, anitomy::kElementDeviceCompatibility);
-        SetEntry(object, "episode_number", elements, anitomy::kElementEpisodeNumber);
-        SetEntry(object, "episode_number_alt", elements, anitomy::kElementEpisodeNumberAlt);
-        SetEntry(object, "episode_prefix", elements, anitomy::kElementEpisodePrefix);
-        SetEntry(object, "episode_title", elements, anitomy::kElementEpisodeTitle);
-        SetEntry(object, "file_checksum", elements, anitomy::kElementFileChecksum);
-        SetEntry(object, "file_extension", elements, anitomy::kElementFileExtension);
-        SetEntry(object, "file_name", elements, anitomy::kElementFileName);
-        SetEntry(object, "language", elements, anitomy::kElementLanguage);
-        SetEntry(object, "other", elements, anitomy::kElementOther);
-        SetEntry(object, "release_group", elements, anitomy::kElementReleaseGroup);
-        SetEntry(object, "release_information", elements, anitomy::kElementReleaseInformation);
-        SetEntry(object, "release_version", elements, anitomy::kElementReleaseVersion);
-        SetEntry(object, "source", elements, anitomy::kElementSource);
-        SetEntry(object, "subtitles", elements, anitomy::kElementSubtitles);
-        SetEntry(object, "video_resolution", elements, anitomy::kElementVideoResolution);
-        SetEntry(object, "video_term", elements, anitomy::kElementVideoTerm);
-        SetEntry(object, "volume_number", elements, anitomy::kElementVolumeNumber);
-        SetEntry(object, "volume_prefix", elements, anitomy::kElementVolumePrefix);
-        SetEntry(object, "unknow", elements, anitomy::kElementUnknown);
+    v8::Local<v8::Object> AnitomyJs::BuildObject(anitomy::Elements& elements, v8::Isolate* isolate) {
+        v8::Local<v8::Object> object = v8::Object::New(isolate);
+        SetEntry(object, isolate, "anime_season", elements, anitomy::kElementAnimeSeason);
+        SetEntry(object, isolate, "season_prefix", elements, anitomy::kElementAnimeSeasonPrefix);
+        SetEntry(object, isolate, "anime_title", elements, anitomy::kElementAnimeTitle);
+        SetEntry(object, isolate, "anime_type", elements, anitomy::kElementAnimeType);
+        SetEntry(object, isolate, "anime_year", elements, anitomy::kElementAnimeYear);
+        SetEntry(object, isolate, "audio_term", elements, anitomy::kElementAudioTerm);
+        SetEntry(object, isolate, "device_compatibility", elements, anitomy::kElementDeviceCompatibility);
+        SetEntry(object, isolate, "episode_number", elements, anitomy::kElementEpisodeNumber);
+        SetEntry(object, isolate, "episode_number_alt", elements, anitomy::kElementEpisodeNumberAlt);
+        SetEntry(object, isolate, "episode_prefix", elements, anitomy::kElementEpisodePrefix);
+        SetEntry(object, isolate, "episode_title", elements, anitomy::kElementEpisodeTitle);
+        SetEntry(object, isolate, "file_checksum", elements, anitomy::kElementFileChecksum);
+        SetEntry(object, isolate, "file_extension", elements, anitomy::kElementFileExtension);
+        SetEntry(object, isolate, "file_name", elements, anitomy::kElementFileName);
+        SetEntry(object, isolate, "language", elements, anitomy::kElementLanguage);
+        SetEntry(object, isolate, "other", elements, anitomy::kElementOther);
+        SetEntry(object, isolate, "release_group", elements, anitomy::kElementReleaseGroup);
+        SetEntry(object, isolate, "release_information", elements, anitomy::kElementReleaseInformation);
+        SetEntry(object, isolate, "release_version", elements, anitomy::kElementReleaseVersion);
+        SetEntry(object, isolate, "source", elements, anitomy::kElementSource);
+        SetEntry(object, isolate, "subtitles", elements, anitomy::kElementSubtitles);
+        SetEntry(object, isolate, "video_resolution", elements, anitomy::kElementVideoResolution);
+        SetEntry(object, isolate, "video_term", elements, anitomy::kElementVideoTerm);
+        SetEntry(object, isolate, "volume_number", elements, anitomy::kElementVolumeNumber);
+        SetEntry(object, isolate, "volume_prefix", elements, anitomy::kElementVolumePrefix);
+        SetEntry(object, isolate, "unknow", elements, anitomy::kElementUnknown);
         return object;
     }
+    
 }

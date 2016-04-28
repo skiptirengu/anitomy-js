@@ -22,6 +22,8 @@
                 "lib/anitomy/anitomy/tokenizer.h",
                 "src/anitomy_js.h",
                 "src/anitomy_js.cpp",
+                "src/worker.h",
+                "src/worker.cpp",
                 "src/addon.cpp"
             ],
             "include_dirs": [

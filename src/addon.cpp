@@ -7,32 +7,47 @@
 */
 
 #include <nan.h>
-#include <anitomy/anitomy.h>
-#include <string>
-#include "anitomy_js.h"
+#include "worker.h"
 
-namespace anitomy_js {
+namespace anitomyJs {
+    
+    bool ValidateInput(v8::Local<v8::Value> value, v8::Isolate* isolate) {
+        bool valid = value->IsString() || value->IsArray();
+        if (!valid) isolate->ThrowException(
+                             v8::Exception::TypeError(v8::String::NewFromUtf8(isolate, "Wrong data type")));
+        return valid;
+    }
     
     void ParseSync(const Nan::FunctionCallbackInfo<v8::Value>& args) {
         v8::Isolate* isolate = args.GetIsolate();
-        v8::Local<v8::Value> value = args[0];
+        v8::Local<v8::Value> input = args[0];
         
-        anitomyJs::AnitomyJs anitomyJs;
-        anitomyJs.SetIsolate(isolate);
+        if (!ValidateInput(input, isolate)) return;
         
-        if (value->IsString()) {
-            args.GetReturnValue().Set(anitomyJs.Parse(value->ToString()));    
-        } else if (value->IsArray()) {
-            args.GetReturnValue().Set(anitomyJs.Parse(v8::Local<v8::Array>::Cast(value)));
-        } else {
-            isolate->ThrowException(v8::Exception::TypeError(
-                                    v8::String::NewFromUtf8(isolate, "Wrong data type")));
-        }
+        anitomyJs::AnitomyJs anitomy;
+        anitomy.SetInput(input);
+        anitomy.Parse();
+        
+        args.GetReturnValue().Set(anitomy.ParsedResult(isolate));
     }
 
     void ParseAsync(const Nan::FunctionCallbackInfo<v8::Value>& args) {
         v8::Isolate* isolate = args.GetIsolate();
-        args.GetReturnValue().Set(v8::String::NewFromUtf8(isolate, "ParseAsync called"));
+        v8::Local<v8::Value> input = args[0];
+        
+        if (!ValidateInput(input, isolate)) return;
+        if (!args[1]->IsFunction()) {
+            isolate->ThrowException(
+                     v8::Exception::TypeError(v8::String::NewFromUtf8(isolate, "Second parameter must be a callback")));
+            return;            
+        } 
+        
+        Nan::Callback* callback = new Nan::Callback(args[1].As<v8::Function>());
+        anitomyJs::Worker* worker = new anitomyJs::Worker(callback);
+        worker->GetAnitomy()->SetInput(input);
+        Nan::AsyncQueueWorker(worker);
+        
+        args.GetReturnValue().Set(Nan::Undefined());
     }
 
     void Init(v8::Local<v8::Object> exports) {  
@@ -47,6 +62,4 @@ namespace anitomy_js {
     
     // TODO stuff 
     // -> Finish async impl
-    // -> Array input
-    // -> Add all entries to ouput object
 }

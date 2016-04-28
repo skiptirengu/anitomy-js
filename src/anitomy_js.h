@@ -6,34 +6,38 @@
 ** file, You can obtain one at https://mozilla.org/MPL/2.0/.
 */
 
-#ifndef ANITOMY_ANITOMY_JS_H
-#define ANITOMY_ANITOMY_JS_H
+#ifndef ANITOMY_JS_ANITOMY_JS_H_
+#define ANITOMY_JS_ANITOMY_JS_H_
 
 #include <anitomy/anitomy.h>
 #include <nan.h>
 #include <string>
+#include <vector>
 
 namespace anitomyJs {
     
     class AnitomyJs {
         public:
-            void SetIsolate(v8::Isolate* isolate);
-            v8::Isolate* GetIsolate();
+            void SetInput(v8::Local<v8::Value> value);
+            void Parse();
             
-            v8::Local<v8::Object> Parse(v8::Local<v8::String> value);
-            v8::Local<v8::Array> Parse(v8::Local<v8::Array> value);
+            std::vector<anitomy::Elements> Parsed();
+            v8::Local<v8::Value> ParsedResult(v8::Isolate* isolate);
             
         private:
-            v8::Isolate* isolate_;
             anitomy::Anitomy anitomy_;
+            std::vector<std::wstring> input_;
+            
+            // Bad, bad programmer
+            std::vector<anitomy::Elements> parsed_; // <---- Please don't do this
+            bool is_batch_parse_;                   // <---- and this...
         
             std::wstring ToWideString(v8::Local<v8::Value> str);
             std::string ToStr(anitomy::string_t str);
             
-            v8::Local<v8::Object> BuildObject(anitomy::Elements& elements);
-            void SetEntry(v8::Local<v8::Object>& object, const char* entry,
+            v8::Local<v8::Object> BuildObject(anitomy::Elements& elements, v8::Isolate* isolate);
+            void SetEntry(v8::Local<v8::Object>& object, v8::Isolate* isolate, const char* entry,
                           anitomy::Elements& elements, anitomy::ElementCategory pos);
-                          
     };
     
 }
