@@ -61,5 +61,5 @@ namespace anitomyJs {
     NODE_MODULE(anitomy, Init)  
     
     // TODO stuff 
-    // -> Finish async impl
+    // Create some tests
 }
