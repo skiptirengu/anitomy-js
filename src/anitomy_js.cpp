@@ -57,10 +57,15 @@ namespace anitomyJs {
     void AnitomyJs::SetEntry(v8::Local<v8::Object>& object, v8::Isolate* isolate, const char* entry,
                              anitomy::Elements& elements, anitomy::ElementCategory pos) {
         v8::Local<v8::String> entry_name = v8::String::NewFromUtf8(isolate, entry);
-        if (elements.count(pos) > 1)
-            object->Set(entry_name, CategoryArray(elements, pos, isolate));
-        else
-            object->Set(entry_name, v8::String::NewFromUtf8(isolate, ToStr(elements.get(pos)).c_str()));;
+        switch(elements.count(pos)) {
+            case 0:
+                break;
+            case 1:
+                object->Set(entry_name, v8::String::NewFromUtf8(isolate, ToStr(elements.get(pos)).c_str()));
+                break;
+            default:
+                object->Set(entry_name, CategoryArray(elements, pos, isolate));
+        }
     }
     
     v8::Local<v8::Array> AnitomyJs::CategoryArray(anitomy::Elements& elements, 
