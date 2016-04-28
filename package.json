@@ -17,9 +17,10 @@
     "nan": "^2.0.0"
   },
   "scripts": {
-    "test": "node index.js"
+    "test": "./node_modules/.bin/mocha"
   },
   "devDependencies": {
-    "mocha": "^2.4.5"
+    "mocha": "^2.4.5",
+    "chai": "*"
   }
 }

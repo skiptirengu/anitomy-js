@@ -1,7 +1,7 @@
 {
     "targets": [
         {
-            "target_name": "anitomy",
+            "target_name": "anitomy-js",
             "sources": [
                 "lib/anitomy/anitomy/anitomy.cpp",
                 "lib/anitomy/anitomy/anitomy.h",
