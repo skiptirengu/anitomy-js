@@ -38,6 +38,8 @@ namespace anitomyJs {
             v8::Local<v8::Object> BuildObject(anitomy::Elements& elements, v8::Isolate* isolate);
             void SetEntry(v8::Local<v8::Object>& object, v8::Isolate* isolate, const char* entry,
                           anitomy::Elements& elements, anitomy::ElementCategory pos);
+            v8::Local<v8::Array> CategoryArray(anitomy::Elements& elements, 
+                                               anitomy::ElementCategory pos, v8::Isolate* isolate);
     };
     
 }

@@ -56,8 +56,23 @@ namespace anitomyJs {
     
     void AnitomyJs::SetEntry(v8::Local<v8::Object>& object, v8::Isolate* isolate, const char* entry,
                              anitomy::Elements& elements, anitomy::ElementCategory pos) {
-        object->Set(v8::String::NewFromUtf8(isolate, entry), 
-                    v8::String::NewFromUtf8(isolate, ToStr(elements.get(pos)).c_str()));;
+        v8::Local<v8::String> entry_name = v8::String::NewFromUtf8(isolate, entry);
+        if (elements.count(pos) > 1)
+            object->Set(entry_name, CategoryArray(elements, pos, isolate));
+        else
+            object->Set(entry_name, v8::String::NewFromUtf8(isolate, ToStr(elements.get(pos)).c_str()));;
+    }
+    
+    v8::Local<v8::Array> AnitomyJs::CategoryArray(anitomy::Elements& elements, 
+                                                  anitomy::ElementCategory pos, v8::Isolate* isolate) {
+        std::vector<anitomy::string_t> category_elements = elements.get_all(pos);
+        v8::Local<v8::Array> output = v8::Array::New(isolate, category_elements.size());
+        unsigned int index = 0;
+        for (anitomy::string_t value : category_elements) {
+            output->Set(index, v8::String::NewFromUtf8(isolate, ToStr(value).c_str()));
+            index++;
+        }
+        return output;
     }
     
     v8::Local<v8::Object> AnitomyJs::BuildObject(anitomy::Elements& elements, v8::Isolate* isolate) {
