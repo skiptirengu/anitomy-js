@@ -3,7 +3,7 @@
  *
  * Copyright (c) 2016 Thiago Oliveira
  *
- * MIT License <https://opensource.org/licenses/MIT>
+ * MIT License <https://github.com/nevermnd/anitomy-js/blob/master/LICENSE>
  ********************************************************************/
 
 #ifndef ANITOMY_JS_ANITOMY_JS_H_
