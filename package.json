@@ -20,7 +20,7 @@
     "test": "./node_modules/.bin/mocha"
   },
   "devDependencies": {
-    "mocha": "^2.4.5",
-    "chai": "*"
+    "chai": "*",
+    "mocha": "^2.4.5"
   }
 }
