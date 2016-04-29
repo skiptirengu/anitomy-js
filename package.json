@@ -2,7 +2,7 @@
   "name": "anitomy-js",
   "version": "0.1.0",
   "description": "Node.js wrapper for anitomy",
-  "license": "MPL",
+  "license": "MIT",
   "contributors": [
     {
       "name": "Thiago Oliveira",
