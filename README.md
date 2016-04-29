@@ -23,7 +23,7 @@ Both methods accept single filename input or, an array of filenames for batch pa
 var anitomy = require('anitomy-js');
 anitomy.parseSync("[tlacatlc6] Natsume Yuujinchou Shi Vol. 1v2 & Vol. 2 (BD 1280x720 x264 AAC)");
 ```
-... would be translated to
+... would be parsed into
 
 ```json
 {
@@ -52,7 +52,7 @@ anitomy.parseAsync(filenames, function(data) {
 });
 ```
 
-... would be translated to
+... would be parsed into
 
 ```json
 [
