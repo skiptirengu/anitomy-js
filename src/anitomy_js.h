@@ -28,7 +28,6 @@ namespace anitomyJs {
             anitomy::Anitomy anitomy_;
             std::vector<std::wstring> input_;
             
-            // Bad, bad programmer
             std::vector<anitomy::Elements> parsed_; // <---- Please don't do this
             bool is_batch_parse_;                   // <---- and this...
         
