@@ -60,6 +60,4 @@ namespace anitomyJs {
     
     NODE_MODULE(anitomy, Init)  
     
-    // TODO stuff 
-    // Create some tests
 }
