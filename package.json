@@ -3,6 +3,13 @@
   "version": "0.1.0",
   "description": "Node.js wrapper for anitomy",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nevermnd/anitomy-js"
+  },
+  "bugs": {
+    "url": "https://github.com/nevermnd/anitomy-js/issues"
+  },
   "contributors": [
     {
       "name": "Thiago Oliveira",
@@ -22,5 +29,8 @@
   "devDependencies": {
     "chai": "*",
     "mocha": "^2.4.5"
+  },
+  "engines": {
+    "node": ">=0.12"
   }
 }
