@@ -14,7 +14,7 @@ npm install anitomy-js
 
 ## Usage
 
-*Anitomy-js* provides two methods: `parseSync` and `parseAsync`.
+*Anitomy-js* provides two methods: `parseSync` and `parseAsync`. 
 Both methods accept single filename input or, an array of filenames for batch parsing.
 
 ### parseSync()

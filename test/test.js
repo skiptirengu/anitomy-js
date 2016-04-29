@@ -11,7 +11,6 @@ var expect = require('chai').expect;
 
 var anitomy = require('../build/Release/anitomy-js');
 
-//TODO char
 describe('anitomy', function () {
 
     var fixture = require('./data.json');
@@ -35,7 +34,7 @@ describe('anitomy', function () {
         });
     });
 
-    describe('anitomy parseSync', function () {
+    describe('anitomy parseAsync', function () {
         it('should parse all anime filenames asynchronously, one by one', function (done) {
             var length = fixtureKeys.length;
             fixtureKeys.forEach(function (key) {
