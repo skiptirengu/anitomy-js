@@ -27,8 +27,7 @@
                 "src/addon.cpp"
             ],
             "cflags": [
-                "-std=c++11",
-                "-stdlib=libc++"
+                "-std=c++11"
             ],
             "cflags_cc!": [
                 "-fno-rtti",
