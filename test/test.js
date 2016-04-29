@@ -11,6 +11,7 @@ var expect = require('chai').expect;
 
 var anitomy = require('../build/Release/anitomy-js');
 
+//TODO char
 describe('anitomy', function () {
 
     var fixture = require('./data.json');
