@@ -34,7 +34,6 @@
                 ]
             },
             "cflags": [
-                "-stdlib=libc++",
                 "-std=c++11",
                 '-w'
             ],
