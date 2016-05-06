@@ -26,7 +26,15 @@
                 "src/worker.cpp",
                 "src/addon.cpp"
             ],
+            "xcode_settings": {
+                "OTHER_CFLAGS": [
+                    "-mmacosx-version-min=10.7",
+                    "-stdlib=libc++",
+                    "-std=c++11"
+                ]
+            },
             "cflags": [
+                "-stdlib=libc++",
                 "-std=c++11",
                 '-w'
             ],
