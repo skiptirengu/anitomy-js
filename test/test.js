@@ -6,8 +6,6 @@
  * MIT License <https://github.com/nevermnd/anitomy-js/blob/master/LICENSE>
  ********************************************************************/
 
-// TODO add tests for ignored_strings and allowed_delimiters
-// TODO check why some filenames still parsing episode number
 var expect = require('chai').expect;
 var anitomy = require('../build/Release/anitomy-js');
 
@@ -38,6 +36,8 @@ describe('anitomy-js', function () {
             });
             parsed.forEach(function (anime) {
                 expect(anime).to.not.have.property("episode_title");
+                // check episode_number_alt because anitomy still parsing
+                // some file's episode number even with parse_episode_number set to false
                 expect(anime).to.not.have.property("episode_number_alt");
                 expect(anime).to.not.have.property("file_extension");
                 expect(anime).to.not.have.property("release_group");
@@ -72,9 +72,7 @@ describe('anitomy-js', function () {
 
         it('should throw an exception for wrong datatypes (options/ignored_strings)', function () {
             expect(function () {
-                anitomy.parseSync("", {
-                    "ignored_strings": null
-                });
+                anitomy.parseSync("", { "ignored_strings": null });
             }).to.throw('ignored_strings must be an array');
         });
 
@@ -111,6 +109,8 @@ describe('anitomy-js', function () {
             anitomy.parseAsync(fixtureKeys, function (data) {
                 data.forEach(function (anime) {
                     expect(anime, anime.file_name).to.not.have.property("episode_title");
+                    // check episode_number_alt because anitomy still parsing
+                    // some file's episode number even with parse_episode_number set to false
                     expect(anime, anime.file_name).to.not.have.property("episode_number_alt");
                     expect(anime, anime.file_name).to.not.have.property("file_extension");
                     expect(anime, anime.file_name).to.not.have.property("release_group");
@@ -154,9 +154,7 @@ describe('anitomy-js', function () {
 
         it('should throw an exception for wrong datatypes (options/ignored_strings)', function () {
             expect(function () {
-                anitomy.parseAsync("", function () { }, {
-                    "ignored_strings": null
-                });
+                anitomy.parseAsync("", function () { }, { "ignored_strings": null });
             }).to.throw('ignored_strings must be an array');
         });
 
