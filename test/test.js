@@ -29,7 +29,7 @@ describe('anitomy-js', function () {
             expect(anitomy.parseSync(fixtureKeys)).to.deep.equal(fixtureValues);
         });
 
-        it('should parse anime filenames sync ignoring episode number, title, file extension and release group', function () {
+        it('should parse anime filenames sync, ignoring episode number, title, file extension and release group', function () {
             var parsed = anitomy.parseSync(fixtureKeys, {
                 "parse_episode_title": false,
                 "parse_episode_number": false,
@@ -44,12 +44,42 @@ describe('anitomy-js', function () {
             });
         });
 
+        it('should ignore string while parsing synchronously', function () {
+            expect(anitomy.parseSync('[ANBU]_Princess_Lover!_-_01_[2048A39A].mkv', {
+                "ignored_strings": ['!']
+            }).file_name).to.eq('[ANBU]_Princess_Lover_-_01_[2048A39A]');
+        });
+
+        it('should override default delimiters while parsing synchronously', function () {
+            expect(anitomy.parseSync("[chibi-Doki] Seikon no Qwaser - 13v0 (Uncensored Director's Cut) [988DB090].mkv", {
+                "allowed_delimiters": '_.&+,|'
+            })).to.deep.equal({
+                anime_title: "Seikon no Qwaser - 13v0 (Uncensored Director's Cut)",
+                file_checksum: '988DB090',
+                file_extension: 'mkv',
+                file_name: '[chibi-Doki] Seikon no Qwaser - 13v0 (Uncensored Director\'s Cut) [988DB090]',
+                release_group: 'chibi-Doki'
+            });
+        });
+
         it('should throw an exception for wrong datatypes (files)', function () {
             expect(function () { anitomy.parseSync(1); }).to.throw('Wrong data type');
         });
 
         it('should throw an exception for wrong datatypes (options)', function () {
             expect(function () { anitomy.parseSync("", null); }).to.throw('Options must be an object');
+        });
+
+        it('should throw an exception for wrong datatypes (options/ignored_strings)', function () {
+            expect(function () {
+                anitomy.parseSync("", {
+                    "ignored_strings": null
+                });
+            }).to.throw('ignored_strings must be an array');
+        });
+
+        it('should throw wrong number of arguments', function () {
+            expect(function () { anitomy.parseSync(); }).to.throw('Wrong number of arguments');
         });
     });
 
@@ -71,7 +101,7 @@ describe('anitomy-js', function () {
             });
         });
 
-        it('should parse anime filenames async ignoring episode number, title, file extension and release group', function (done) {
+        it('should parse anime filenames async, ignoring episode number, title, file extension and release group', function (done) {
             var options = {
                 "parse_episode_title": false,
                 "parse_episode_number": false,
@@ -89,6 +119,27 @@ describe('anitomy-js', function () {
             }, options);
         });
 
+        it('should ignore string while parsing asynchronously', function (done) {
+            expect(anitomy.parseAsync('[ANBU]_Princess_Lover!_-_01_[2048A39A].mkv', function (data) {
+                expect(data.file_name).to.eq('[ANBU]_Princess_Lover_-_01_[2048A39A]');
+                done();
+            }, { "ignored_strings": ['!'] }));
+        });
+
+        it('should override default delimiters while parsing asynchronously', function (done) {
+            expect(anitomy.parseAsync("[chibi-Doki] Seikon no Qwaser - 13v0 (Uncensored Director's Cut) [988DB090].mkv",
+                function (data) {
+                    expect(data).to.deep.equal({
+                        anime_title: "Seikon no Qwaser - 13v0 (Uncensored Director's Cut)",
+                        file_checksum: '988DB090',
+                        file_extension: 'mkv',
+                        file_name: '[chibi-Doki] Seikon no Qwaser - 13v0 (Uncensored Director\'s Cut) [988DB090]',
+                        release_group: 'chibi-Doki'
+                    });
+                    done();
+                }, { "allowed_delimiters": '_.&+,|' }));
+        });
+
         it('should throw an exception for wrong datatypes (files)', function () {
             expect(function () { anitomy.parseAsync(1, function () { }); }).to.throw('Wrong data type');
         });
@@ -99,6 +150,18 @@ describe('anitomy-js', function () {
 
         it('should throw an exception for wrong datatypes (options)', function () {
             expect(function () { anitomy.parseAsync("", function () { }, null); }).to.throw('Options must be an object');
+        });
+
+        it('should throw an exception for wrong datatypes (options/ignored_strings)', function () {
+            expect(function () {
+                anitomy.parseAsync("", function () { }, {
+                    "ignored_strings": null
+                });
+            }).to.throw('ignored_strings must be an array');
+        });
+
+        it('should throw wrong number of arguments', function () {
+            expect(function () { anitomy.parseAsync(); }).to.throw('Wrong number of arguments');
         });
     });
 });
