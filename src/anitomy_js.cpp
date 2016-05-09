@@ -64,6 +64,7 @@ namespace anitomyJs {
         anitomy_options.parse_episode_title = BoolOption("parse_episode_title", value, isolate);
         anitomy_options.parse_file_extension = BoolOption("parse_file_extension", value, isolate);
         anitomy_options.parse_release_group = BoolOption("parse_release_group", value, isolate);
+        return true;
     }
     
     bool AnitomyJs::BoolOption(const char* name, v8::Local<v8::Object> value, v8::Isolate* isolate) {

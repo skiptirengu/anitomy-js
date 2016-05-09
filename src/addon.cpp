@@ -40,7 +40,7 @@ namespace anitomyJs {
         anitomyJs::AnitomyJs anitomy;
         if (args_length >= 2) {
             v8::Local<v8::Value> options = args[1];
-            if (!ValidateOptions(options, isolate) || anitomy.SetOptions(options->ToObject(), isolate)) return;
+            if (!ValidateOptions(options, isolate) || !anitomy.SetOptions(options->ToObject(), isolate)) return;
         }
         
         anitomy.SetInput(input);
