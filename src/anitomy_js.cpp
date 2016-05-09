@@ -107,7 +107,7 @@ namespace anitomyJs {
         SetEntry(object, isolate, "video_term", elements, anitomy::kElementVideoTerm);
         SetEntry(object, isolate, "volume_number", elements, anitomy::kElementVolumeNumber);
         SetEntry(object, isolate, "volume_prefix", elements, anitomy::kElementVolumePrefix);
-        SetEntry(object, isolate, "unknow", elements, anitomy::kElementUnknown);
+        SetEntry(object, isolate, "unknown", elements, anitomy::kElementUnknown);
         return object;
     }
     
