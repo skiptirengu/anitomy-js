@@ -82,7 +82,6 @@ namespace anitomyJs {
         return parsed_;
     }
     
-    // TODO For ~desu's sake, stop doing this flag shit
     v8::Local<v8::Value> AnitomyJs::ParsedResult(v8::Isolate* isolate) {
         v8::Local<v8::Array> output = v8::Array::New(isolate, parsed_.size());
         unsigned int index = 0;
@@ -90,6 +89,7 @@ namespace anitomyJs {
             output->Set(index, BuildObject(element, isolate));
             index++;
         }
+        // TODO For ~desu's sake, stop using this flag
         if (is_batch_parse_) return output;
         return output->Get(0);
     }

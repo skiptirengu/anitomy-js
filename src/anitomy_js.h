@@ -29,8 +29,8 @@ namespace anitomyJs {
             anitomy::Anitomy anitomy_;
             std::vector<std::wstring> input_;
             
-            std::vector<anitomy::Elements> parsed_; // <---- Please don't do this
-            bool is_batch_parse_;                   // <---- and this...
+            std::vector<anitomy::Elements> parsed_; 
+            bool is_batch_parse_;                   
         
             std::wstring ToWideString(v8::Local<v8::Value> str);
             std::string ToStr(anitomy::string_t str);

@@ -3,3 +3,5 @@
 /lib/anitomy/build/
 npm-debug.log
 /.vscode/
+/typings/
+jsconfig.json
