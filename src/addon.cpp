@@ -42,7 +42,7 @@ namespace anitomyJs {
         if (args_length >= 2) {
             v8::Local<v8::Value> options = args[1];
             if (!ValidateOptions(options, isolate)) return;
-            anitomy.SetOptions(options->ToObject());
+            anitomy.SetOptions(options->ToObject(), isolate);
         }
         
         anitomy.SetInput(input);
@@ -74,7 +74,7 @@ namespace anitomyJs {
         if (args_length >= 3) {
             v8::Local<v8::Value> options = args[2];
             if (!ValidateOptions(options, isolate)) return;
-            worker->GetAnitomy()->SetOptions(options->ToObject());
+            worker->GetAnitomy()->SetOptions(options->ToObject(), isolate);
         }
         
         worker->GetAnitomy()->SetInput(input);

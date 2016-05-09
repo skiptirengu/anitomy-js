@@ -8,6 +8,7 @@
 
 #include "anitomy_js.h"
 
+// TODO tests for options!
 namespace anitomyJs {
     
     void AnitomyJs::SetInput(v8::Local<v8::Value> value) {
@@ -20,8 +21,54 @@ namespace anitomyJs {
         }
     }
     
-    void AnitomyJs::SetOptions(v8::Local<v8::Object> value) {
+    bool AnitomyJs::SetOptions(v8::Local<v8::Object> value, v8::Isolate* isolate) {
+        v8::Local<v8::String> allowed_delimiters_str = v8::String::NewFromUtf8(isolate, "allowed_delimiters");
+        v8::Local<v8::String> ignored_strings_str = v8::String::NewFromUtf8(isolate, "ignored_strings");
+        anitomy::Options& anitomy_options = anitomy_.options();
         
+        // Parse allowed_delimiters option
+        if (value->Has(allowed_delimiters_str)) {
+            v8::Local<v8::Value> allowed_delimiters = value->Get(allowed_delimiters_str);
+            if (!allowed_delimiters->IsString()) {
+                isolate->ThrowException(v8::Exception::TypeError(
+                                        v8::String::NewFromUtf8(isolate, "allowed_delimiters must be a string")));
+                return false;
+            }
+            anitomy_options.allowed_delimiters = ToWideString(allowed_delimiters);
+        }
+        
+        // Parse ignored_strings option
+        if (value->Has(ignored_strings_str)) {
+            v8::Local<v8::Value> string_array = value->Get(ignored_strings_str);
+            if (!string_array->IsArray()) {
+                isolate->ThrowException(v8::Exception::TypeError(
+                                        v8::String::NewFromUtf8(isolate, "ignored_strings must be an array")));
+                return false;
+            }
+            v8::Local<v8::Array> ignored_strings = v8::Local<v8::Array>::Cast(string_array);
+            std::vector<anitomy::string_t> strings(ignored_strings->Length());
+            for (unsigned int i = 0; i < ignored_strings->Length(); i++) {
+                v8::Local<v8::Value> ignored_string = ignored_strings->Get(i);
+                if (!ignored_string->IsString()) {
+                    isolate->ThrowException(v8::Exception::TypeError(
+                                            v8::String::NewFromUtf8(isolate, "ignored_strings must be an array of strings")));
+                    return false;
+                }
+                strings.push_back(ToWideString(ignored_string));
+            }
+            anitomy_options.ignored_strings = strings;
+        }
+        
+        // Parse other options
+        AddBoolOption("parse_episode_number", anitomy_options.parse_episode_number, value, isolate);
+        AddBoolOption("parse_episode_title", anitomy_options.parse_episode_title, value, isolate);
+        AddBoolOption("parse_file_extension", anitomy_options.parse_file_extension, value, isolate);
+        AddBoolOption("parse_release_group", anitomy_options.parse_release_group, value, isolate);
+    }
+    
+    void AnitomyJs::AddBoolOption(const char* name, bool& option, v8::Local<v8::Object> value, v8::Isolate* isolate) {
+        v8::Local<v8::String> entry_name = v8::String::NewFromUtf8(isolate, name);
+        option = value->Get(entry_name)->IsTrue();
     }
     
     void AnitomyJs::Parse() {
