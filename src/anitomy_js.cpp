@@ -48,13 +48,7 @@ namespace anitomyJs {
             unsigned int ignored_strings_length = ignored_strings->Length();
             std::vector<anitomy::string_t> strings(ignored_strings_length);
             for (unsigned int i = 0; i < ignored_strings_length; i++) {
-                v8::Local<v8::Value> ignored_string = ignored_strings->Get(i);
-                if (!ignored_string->IsString()) {
-                    isolate->ThrowException(v8::Exception::TypeError(
-                                            v8::String::NewFromUtf8(isolate, "ignored_strings must be an array of strings")));
-                    return false;
-                }
-                strings.push_back(ToWideString(ignored_string));
+                strings.push_back(ToWideString(ignored_strings->Get(i)->ToString()));
             }
             anitomy_options.ignored_strings = strings;
         }
