@@ -46,8 +46,9 @@ namespace anitomyJs {
                 return false;
             }
             v8::Local<v8::Array> ignored_strings = v8::Local<v8::Array>::Cast(string_array);
-            std::vector<anitomy::string_t> strings(ignored_strings->Length());
-            for (unsigned int i = 0; i < ignored_strings->Length(); i++) {
+            unsigned int ignored_strings_length = ignored_strings->Length();
+            std::vector<anitomy::string_t> strings(ignored_strings_length);
+            for (unsigned int i = 0; i < ignored_strings_length; i++) {
                 v8::Local<v8::Value> ignored_string = ignored_strings->Get(i);
                 if (!ignored_string->IsString()) {
                     isolate->ThrowException(v8::Exception::TypeError(
