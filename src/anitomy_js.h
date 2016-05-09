@@ -35,7 +35,7 @@ namespace anitomyJs {
             std::wstring ToWideString(v8::Local<v8::Value> str);
             std::string ToStr(anitomy::string_t str);
             
-            void AddBoolOption(const char* name, bool& option, v8::Local<v8::Object> value, v8::Isolate* isolate);
+            bool BoolOption(const char* name, v8::Local<v8::Object> value, v8::Isolate* isolate);
             
             v8::Local<v8::Object> BuildObject(anitomy::Elements& elements, v8::Isolate* isolate);
             void SetEntry(v8::Local<v8::Object>& object, v8::Isolate* isolate, const char* entry,

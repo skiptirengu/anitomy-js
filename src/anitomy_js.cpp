@@ -59,16 +59,16 @@ namespace anitomyJs {
             anitomy_options.ignored_strings = strings;
         }
         
-        // Parse other options
-        AddBoolOption("parse_episode_number", anitomy_options.parse_episode_number, value, isolate);
-        AddBoolOption("parse_episode_title", anitomy_options.parse_episode_title, value, isolate);
-        AddBoolOption("parse_file_extension", anitomy_options.parse_file_extension, value, isolate);
-        AddBoolOption("parse_release_group", anitomy_options.parse_release_group, value, isolate);
+        // other options
+        anitomy_options.parse_episode_number = BoolOption("parse_episode_number", value, isolate); 
+        anitomy_options.parse_episode_title = BoolOption("parse_episode_title", value, isolate);
+        anitomy_options.parse_file_extension = BoolOption("parse_file_extension", value, isolate);
+        anitomy_options.parse_release_group = BoolOption("parse_release_group", value, isolate);
     }
     
-    void AnitomyJs::AddBoolOption(const char* name, bool& option, v8::Local<v8::Object> value, v8::Isolate* isolate) {
+    bool AnitomyJs::BoolOption(const char* name, v8::Local<v8::Object> value, v8::Isolate* isolate) {
         v8::Local<v8::String> entry_name = v8::String::NewFromUtf8(isolate, name);
-        if (value->Has(entry_name)) option = value->Get(entry_name)->ToBoolean()->IsTrue();
+        return value->Has(entry_name) ? value->Get(entry_name)->ToBoolean()->IsTrue() : true;
     }
     
     void AnitomyJs::Parse() {
