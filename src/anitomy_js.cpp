@@ -20,6 +20,10 @@ namespace anitomyJs {
         }
     }
     
+    void AnitomyJs::SetOptions(v8::Local<v8::Object> value) {
+        
+    }
+    
     void AnitomyJs::Parse() {
         for (std::wstring str : input_) {
             anitomy_.Parse(str);

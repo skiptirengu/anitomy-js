@@ -19,6 +19,7 @@ namespace anitomyJs {
     class AnitomyJs {
         public:
             void SetInput(v8::Local<v8::Value> value);
+            void SetOptions(v8::Local<v8::Object> value);
             void Parse();
             
             std::vector<anitomy::Elements> Parsed();
