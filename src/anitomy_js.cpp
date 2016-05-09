@@ -68,7 +68,7 @@ namespace anitomyJs {
     
     void AnitomyJs::AddBoolOption(const char* name, bool& option, v8::Local<v8::Object> value, v8::Isolate* isolate) {
         v8::Local<v8::String> entry_name = v8::String::NewFromUtf8(isolate, name);
-        option = value->Get(entry_name)->IsTrue();
+        if (value->Has(entry_name)) option = value->Get(entry_name)->ToBoolean()->IsTrue();
     }
     
     void AnitomyJs::Parse() {
