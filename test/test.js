@@ -6,6 +6,8 @@
  * MIT License <https://github.com/nevermnd/anitomy-js/blob/master/LICENSE>
  ********************************************************************/
 
+// TODO add more tests for options
+
 var assert = require('chai').assert;
 var expect = require('chai').expect;
 
@@ -29,8 +31,12 @@ describe('anitomy', function () {
             expect(anitomy.parseSync(fixtureKeys)).to.deep.equal(fixtureValues);
         });
 
-        it('should throw an exception for wrong datatypes', function () {
+        it('should throw an exception for wrong datatypes (files)', function () {
             expect(function () { anitomy.parseSync(1); }).to.throw('Wrong data type');
+        });
+
+        it('should throw an exception for wrong datatypes (options)', function () {
+            expect(function () { anitomy.parseSync("", null); }).to.throw('Options must be an object');
         });
     });
 
@@ -52,12 +58,16 @@ describe('anitomy', function () {
             });
         });
 
-        it('should throw an exception for wrong datatypes', function () {
+        it('should throw an exception for wrong datatypes (files)', function () {
             expect(function () { anitomy.parseAsync(1, function () { }); }).to.throw('Wrong data type');
         });
 
-        it('should throw an exception for wrong datatypes', function () {
+        it('should throw an exception for wrong datatypes (callback)', function () {
             expect(function () { anitomy.parseAsync("", null); }).to.throw('Second parameter must be a callback');
+        });
+        
+        it('should throw an exception for wrong datatypes (options)', function () {
+            expect(function () { anitomy.parseAsync("", function () { }, null); }).to.throw('Options must be an object');
         });
     });
 

@@ -8,7 +8,6 @@
 
 #include "anitomy_js.h"
 
-// TODO tests for options!
 namespace anitomyJs {
     
     void AnitomyJs::SetInput(v8::Local<v8::Value> value) {
