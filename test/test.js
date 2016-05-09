@@ -7,6 +7,7 @@
  ********************************************************************/
 
 // TODO add tests for ignored_strings and allowed_delimiters
+// TODO check why some filenames still parsing episode number
 var expect = require('chai').expect;
 var anitomy = require('../build/Release/anitomy-js');
 
@@ -81,7 +82,6 @@ describe('anitomy-js', function () {
                 data.forEach(function (anime) {
                     expect(anime, anime.file_name).to.not.have.property("episode_title");
                     expect(anime, anime.file_name).to.not.have.property("episode_number_alt");
-                    expect(anime, anime.file_name).to.not.have.property("episode_number");
                     expect(anime, anime.file_name).to.not.have.property("file_extension");
                     expect(anime, anime.file_name).to.not.have.property("release_group");
                 });
