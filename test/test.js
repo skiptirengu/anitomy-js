@@ -57,7 +57,7 @@ describe('anitomy', function () {
         });
 
         it('should throw an exception for wrong datatypes', function () {
-            expect(function () { anitomy.parseAsync(""); }).to.throw('Second parameter must be a callback');
+            expect(function () { anitomy.parseAsync("", null); }).to.throw('Second parameter must be a callback');
         });
     });
 
