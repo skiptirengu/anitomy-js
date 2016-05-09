@@ -28,9 +28,9 @@ namespace anitomyJs {
     
     void ParseSync(const Nan::FunctionCallbackInfo<v8::Value>& args) {
         v8::Isolate* isolate = args.GetIsolate();
-        int args_lenght = args.Length();
+        int args_length = args.Length();
         
-        if (args_lenght < 1) {
+        if (args_length < 1) {
             isolate->ThrowException(v8::Exception::TypeError(v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
             return;
         }
@@ -39,7 +39,7 @@ namespace anitomyJs {
         if (!ValidateInput(input, isolate)) return;
         
         anitomyJs::AnitomyJs anitomy;
-        if (args_lenght >= 2) {
+        if (args_length >= 2) {
             v8::Local<v8::Value> options = args[1];
             if (!ValidateOptions(options, isolate)) return;
             //Worker->GetAnitomy()->SetOptions(options->ToObject());
@@ -53,9 +53,9 @@ namespace anitomyJs {
 
     void ParseAsync(const Nan::FunctionCallbackInfo<v8::Value>& args) {
         v8::Isolate* isolate = args.GetIsolate();
-        int args_lenght = args.Length();
+        int args_length = args.Length();
         
-        if (args_lenght < 2) {
+        if (args_length < 2) {
             isolate->ThrowException(v8::Exception::TypeError(v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
             return;
         }
@@ -71,7 +71,7 @@ namespace anitomyJs {
         Nan::Callback* callback = new Nan::Callback(args[1].As<v8::Function>());
         anitomyJs::Worker* worker = new anitomyJs::Worker(callback);
         
-        if (args_lenght >= 3) {
+        if (args_length >= 3) {
             v8::Local<v8::Value> options = args[2];
             if (!ValidateOptions(options, isolate)) return;
             //Worker->GetAnitomy()->SetOptions(options->ToObject());
