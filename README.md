@@ -17,6 +17,15 @@ npm install anitomy-js
 *Anitomy-js* provides two methods: `parseSync` and `parseAsync`. 
 Both methods accept single filename input or, an array of filenames for batch parsing.
 
+Additionally you can pass an object as the last parameter to change Anitomy's original parsing options. The options are the following:
+
++ `allowed_delimiters` - defaults to `" _.&+,|"`
++ `ignored_strings` - defaults to `[]`
++ `parse_episode_number` - defaults to `true`
++ `parse_episode_title` - defaults to `true`
++ `parse_file_extension` - defaults to `true`
++ `parse_release_group` - defaults to `true`
+ 
 ### parseSync()
 
 ```js

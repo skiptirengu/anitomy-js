@@ -20,6 +20,52 @@ namespace anitomyJs {
         }
     }
     
+    bool AnitomyJs::SetOptions(v8::Local<v8::Object> value, v8::Isolate* isolate) {
+        v8::Local<v8::String> allowed_delimiters_str = v8::String::NewFromUtf8(isolate, "allowed_delimiters");
+        v8::Local<v8::String> ignored_strings_str = v8::String::NewFromUtf8(isolate, "ignored_strings");
+        anitomy::Options& anitomy_options = anitomy_.options();
+        
+        // Parse allowed_delimiters option
+        if (value->Has(allowed_delimiters_str)) {
+            v8::Local<v8::Value> allowed_delimiters = value->Get(allowed_delimiters_str);
+            if (!allowed_delimiters->IsString()) {
+                isolate->ThrowException(v8::Exception::TypeError(
+                                        v8::String::NewFromUtf8(isolate, "allowed_delimiters must be a string")));
+                return false;
+            }
+            anitomy_options.allowed_delimiters = ToWideString(allowed_delimiters);
+        }
+        
+        // Parse ignored_strings option
+        if (value->Has(ignored_strings_str)) {
+            v8::Local<v8::Value> string_array = value->Get(ignored_strings_str);
+            if (!string_array->IsArray()) {
+                isolate->ThrowException(v8::Exception::TypeError(
+                                        v8::String::NewFromUtf8(isolate, "ignored_strings must be an array")));
+                return false;
+            }
+            v8::Local<v8::Array> ignored_strings = v8::Local<v8::Array>::Cast(string_array);
+            unsigned int ignored_strings_length = ignored_strings->Length();
+            std::vector<anitomy::string_t> strings(ignored_strings_length);
+            for (unsigned int i = 0; i < ignored_strings_length; i++) {
+                strings.push_back(ToWideString(ignored_strings->Get(i)->ToString()));
+            }
+            anitomy_options.ignored_strings = strings;
+        }
+        
+        // other options
+        anitomy_options.parse_episode_number = BoolOption("parse_episode_number", value, isolate); 
+        anitomy_options.parse_episode_title = BoolOption("parse_episode_title", value, isolate);
+        anitomy_options.parse_file_extension = BoolOption("parse_file_extension", value, isolate);
+        anitomy_options.parse_release_group = BoolOption("parse_release_group", value, isolate);
+        return true;
+    }
+    
+    bool AnitomyJs::BoolOption(const char* name, v8::Local<v8::Object> value, v8::Isolate* isolate) {
+        v8::Local<v8::String> entry_name = v8::String::NewFromUtf8(isolate, name);
+        return value->Has(entry_name) ? value->Get(entry_name)->ToBoolean()->IsTrue() : true;
+    }
+    
     void AnitomyJs::Parse() {
         for (std::wstring str : input_) {
             anitomy_.Parse(str);
@@ -31,7 +77,6 @@ namespace anitomyJs {
         return parsed_;
     }
     
-    // TODO For ~desu's sake, stop doing this flag shit
     v8::Local<v8::Value> AnitomyJs::ParsedResult(v8::Isolate* isolate) {
         v8::Local<v8::Array> output = v8::Array::New(isolate, parsed_.size());
         unsigned int index = 0;
@@ -39,6 +84,7 @@ namespace anitomyJs {
             output->Set(index, BuildObject(element, isolate));
             index++;
         }
+        // TODO For ~desu's sake, stop using this flag
         if (is_batch_parse_) return output;
         return output->Get(0);
     }

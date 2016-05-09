@@ -19,6 +19,7 @@ namespace anitomyJs {
     class AnitomyJs {
         public:
             void SetInput(v8::Local<v8::Value> value);
+            bool SetOptions(v8::Local<v8::Object> value, v8::Isolate* isolate);
             void Parse();
             
             std::vector<anitomy::Elements> Parsed();
@@ -28,11 +29,13 @@ namespace anitomyJs {
             anitomy::Anitomy anitomy_;
             std::vector<std::wstring> input_;
             
-            std::vector<anitomy::Elements> parsed_; // <---- Please don't do this
-            bool is_batch_parse_;                   // <---- and this...
+            std::vector<anitomy::Elements> parsed_; 
+            bool is_batch_parse_;                   
         
             std::wstring ToWideString(v8::Local<v8::Value> str);
             std::string ToStr(anitomy::string_t str);
+            
+            bool BoolOption(const char* name, v8::Local<v8::Object> value, v8::Isolate* isolate);
             
             v8::Local<v8::Object> BuildObject(anitomy::Elements& elements, v8::Isolate* isolate);
             void SetEntry(v8::Local<v8::Object>& object, v8::Isolate* isolate, const char* entry,
