@@ -2,3 +2,4 @@
 /node_modules/
 /lib/anitomy/build/
 npm-debug.log
+/.vscode/
