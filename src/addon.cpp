@@ -18,13 +18,33 @@ namespace anitomyJs {
         return valid;
     }
     
+    bool ValidateOptions(v8::Local<v8::Value> options, v8::Isolate* isolate) {
+        if (!options->IsObject()) {
+            isolate->ThrowException(v8::Exception::TypeError(v8::String::NewFromUtf8(isolate, "Options must be an object")));
+            return false;
+        }
+        return true;
+    }
+    
     void ParseSync(const Nan::FunctionCallbackInfo<v8::Value>& args) {
         v8::Isolate* isolate = args.GetIsolate();
-        v8::Local<v8::Value> input = args[0];
+        int args_lenght = args.Length();
         
+        if (args_lenght < 1) {
+            isolate->ThrowException(v8::Exception::TypeError(v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+            return;
+        }
+        
+        v8::Local<v8::Value> input = args[0];
         if (!ValidateInput(input, isolate)) return;
         
         anitomyJs::AnitomyJs anitomy;
+        if (args_lenght >= 2) {
+            v8::Local<v8::Value> options = args[1];
+            if (!ValidateOptions(options, isolate)) return;
+            //Worker->GetAnitomy()->SetOptions(options->ToObject());
+        }
+        
         anitomy.SetInput(input);
         anitomy.Parse();
         
@@ -33,20 +53,32 @@ namespace anitomyJs {
 
     void ParseAsync(const Nan::FunctionCallbackInfo<v8::Value>& args) {
         v8::Isolate* isolate = args.GetIsolate();
-        v8::Local<v8::Value> input = args[0];
+        int args_lenght = args.Length();
         
+        if (args_lenght < 2) {
+            isolate->ThrowException(v8::Exception::TypeError(v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+            return;
+        }
+        
+        v8::Local<v8::Value> input = args[0];
         if (!ValidateInput(input, isolate)) return;
         if (!args[1]->IsFunction()) {
             isolate->ThrowException(
                      v8::Exception::TypeError(v8::String::NewFromUtf8(isolate, "Second parameter must be a callback")));
             return;            
-        } 
+        }
         
         Nan::Callback* callback = new Nan::Callback(args[1].As<v8::Function>());
         anitomyJs::Worker* worker = new anitomyJs::Worker(callback);
+        
+        if (args_lenght >= 3) {
+            v8::Local<v8::Value> options = args[2];
+            if (!ValidateOptions(options, isolate)) return;
+            //Worker->GetAnitomy()->SetOptions(options->ToObject());
+        }
+        
         worker->GetAnitomy()->SetInput(input);
         Nan::AsyncQueueWorker(worker);
-        
         args.GetReturnValue().Set(Nan::Undefined());
     }
 
