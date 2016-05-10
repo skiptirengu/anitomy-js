@@ -11,6 +11,3 @@ test_script:
     - node --version
     - npm --version
     - npm test
-
- matrix:
-    fast_finish: true
