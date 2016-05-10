@@ -2,10 +2,14 @@ environment:
     matrix:
         - nodejs_version: "0.12"
         - nodejs_version: "4.0"
+
 install:
     - git submodule update --init --recursive
     - npm install
+
 test_script:
     - node --version
     - npm --version
     - npm test
+
+build: off
