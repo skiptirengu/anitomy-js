@@ -17,17 +17,17 @@ describe('anitomy-js', function () {
     for (var key in fixture) fixtureValues.push(fixture[key]);
 
     describe('anitomy parseSync', function () {
-        it('should parse all anime filenames synchronously, one by one', function () {
+        it('should parse all anime filenames, one by one', function () {
             fixtureKeys.forEach(function (key) {
                 expect(anitomy.parseSync(key)).to.deep.equal(fixture[key]);
             });
         });
 
-        it('should parse all anime filenames synchronously, all at once', function () {
+        it('should parse all anime filenames, all at once', function () {
             expect(anitomy.parseSync(fixtureKeys)).to.deep.equal(fixtureValues);
         });
 
-        it('should parse anime filenames sync, ignoring episode number, title, file extension and release group', function () {
+        it('should parse anime filenames, ignoring episode number, title, file extension and release group', function () {
             var parsed = anitomy.parseSync(fixtureKeys, {
                 "parse_episode_title": false,
                 "parse_episode_number": false,
@@ -44,13 +44,13 @@ describe('anitomy-js', function () {
             });
         });
 
-        it('should ignore string while parsing synchronously', function () {
+        it('should ignore string', function () {
             expect(anitomy.parseSync('[ANBU]_Princess_Lover!_-_01_[2048A39A].mkv', {
                 "ignored_strings": ['!']
             }).file_name).to.eq('[ANBU]_Princess_Lover_-_01_[2048A39A]');
         });
 
-        it('should override default delimiters while parsing synchronously', function () {
+        it('should override default delimiters', function () {
             expect(anitomy.parseSync("[chibi-Doki] Seikon no Qwaser - 13v0 (Uncensored Director's Cut) [988DB090].mkv", {
                 "allowed_delimiters": '_.&+,|'
             })).to.deep.equal({
@@ -82,7 +82,7 @@ describe('anitomy-js', function () {
     });
 
     describe('anitomy parseAsync', function () {
-        it('should parse all anime filenames asynchronously, one by one', function (done) {
+        it('should parse all anime filenames, one by one', function (done) {
             var length = fixtureKeys.length;
             fixtureKeys.forEach(function (key) {
                 anitomy.parseAsync(key, function (data) {
@@ -92,14 +92,14 @@ describe('anitomy-js', function () {
             });
         });
 
-        it('should parse all anime filenames asynchronously, all at once', function (done) {
+        it('should parse all anime filenames, all at once', function (done) {
             anitomy.parseAsync(fixtureKeys, function (data) {
                 expect(data).to.deep.equal(fixtureValues);
                 done();
             });
         });
 
-        it('should parse anime filenames async, ignoring episode number, title, file extension and release group', function (done) {
+        it('should parse anime filenames, ignoring episode number, title, file extension and release group', function (done) {
             var options = {
                 "parse_episode_title": false,
                 "parse_episode_number": false,
@@ -119,14 +119,14 @@ describe('anitomy-js', function () {
             }, options);
         });
 
-        it('should ignore string while parsing asynchronously', function (done) {
+        it('should ignore string', function (done) {
             expect(anitomy.parseAsync('[ANBU]_Princess_Lover!_-_01_[2048A39A].mkv', function (data) {
                 expect(data.file_name).to.eq('[ANBU]_Princess_Lover_-_01_[2048A39A]');
                 done();
             }, { "ignored_strings": ['!'] }));
         });
 
-        it('should override default delimiters while parsing asynchronously', function (done) {
+        it('should override default delimiters', function (done) {
             expect(anitomy.parseAsync("[chibi-Doki] Seikon no Qwaser - 13v0 (Uncensored Director's Cut) [988DB090].mkv",
                 function (data) {
                     expect(data).to.deep.equal({
