@@ -5,6 +5,7 @@ environment:
 
 install:
     - git submodule update --init --recursive
+    - npm -g install npm@next
     - npm install
 
 test_script:
