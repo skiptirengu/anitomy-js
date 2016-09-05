@@ -1,6 +1,6 @@
 {
   "name": "anitomy-js",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "main": "build/Release/anitomy-js",
   "description": "Node.js wrapper for anitomy",
   "license": "MIT",
@@ -28,8 +28,8 @@
     "test": "./node_modules/.bin/mocha"
   },
   "devDependencies": {
-    "chai": "*",
-    "mocha": "^2.4.5"
+    "chai": "^3.5.0",
+    "mocha": "^3.0.2"
   },
   "engines": {
     "node": ">=0.12"
