@@ -1,6 +1,6 @@
 {
   "name": "anitomy-js",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "main": "build/Release/anitomy-js",
   "description": "Node.js wrapper for anitomy",
   "license": "MIT",
@@ -13,8 +13,8 @@
   },
   "contributors": [
     {
-      "name": "Thiago Oliveira",
-      "email": "thiago.oliveira.gt14@gmail.com"
+      "name": "Skiptir Engu",
+      "email": "skiptir.engu@yandex.com"
     }
   ],
   "keywords": [
