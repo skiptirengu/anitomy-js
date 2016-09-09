@@ -1,8 +1,10 @@
 # Anitomy-js
 
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/nevermnd/anitomy-js/master/LICENSE)
+[![Dependencies][deps-image]][deps-url]
 [![Linux Build][travis-image]][travis-url]
 [![Windows Build][appveyor-image]][appveyor-url]
+
 
 *Anitomy-js* is a Node.js wrapper for [Anitomy](https://github.com/erengy/anitomy) - a C++ library for parsing anime video filenames.
 
@@ -92,7 +94,9 @@ anitomy.parseAsync(filenames, function(data) {
 
 Licensed under the incredibly [permissive](http://en.wikipedia.org/wiki/Permissive_free_software_licence) [MIT license](http://creativecommons.org/licenses/MIT/)
 
-[travis-url]: https://travis-ci.org/nevermnd/anitomy-js
+[deps-image]:https://david-dm.org/nevermnd/anitomy-js.svg
 [travis-image]: http://img.shields.io/travis/nevermnd/anitomy-js/master.svg?label=linux
 [appveyor-image]:https://img.shields.io/appveyor/ci/nevermnd/anitomy-js/master.svg?label=windows
+[deps-url]:https://david-dm.org/nevermnd/anitomy-js
 [appveyor-url]:https://ci.appveyor.com/project/nevermnd/anitomy-js
+[travis-url]: https://travis-ci.org/nevermnd/anitomy-js
