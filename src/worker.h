@@ -13,20 +13,19 @@
 #include <nan.h>
 
 namespace anitomyJs {
-    
-    class Worker : public Nan::AsyncWorker {
-        public:
-            Worker(Nan::Callback* callback);
-            anitomyJs::AnitomyJs* GetAnitomy();
-            void Execute();
-            
-        protected:
-            void HandleOKCallback();
-            
-        private:
-            anitomyJs::AnitomyJs anitomy_;
-    };
-    
+
+class Worker : public Nan::AsyncWorker {
+public:
+  Worker(Nan::Callback *callback);
+  anitomyJs::AnitomyJs *GetAnitomy();
+  void Execute();
+
+protected:
+  void HandleOKCallback();
+
+private:
+  anitomyJs::AnitomyJs anitomy_;
+};
 }
 
 #endif
