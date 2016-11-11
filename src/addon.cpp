@@ -1,8 +1,6 @@
 /*********************************************************************
  * AnitomyJs - Node.js wrapper for Anitomy
  *
- * Copyright (c) 2016 Thiago Oliveira
- *
  * MIT License <https://github.com/nevermnd/anitomy-js/blob/master/LICENSE>
  ********************************************************************/
 
