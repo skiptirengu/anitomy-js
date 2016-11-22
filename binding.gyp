@@ -34,8 +34,7 @@
                 ]
             },
             "cflags": [
-                "-std=c++11",
-                '-w'
+                "-std=c++11"
             ],
             "cflags_cc!": [
                 "-fno-rtti",

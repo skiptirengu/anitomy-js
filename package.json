@@ -1,6 +1,6 @@
 {
   "name": "anitomy-js",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "main": "build/Release/anitomy-js",
   "description": "Node.js wrapper for anitomy",
   "license": "MIT",
