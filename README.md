@@ -95,8 +95,8 @@ anitomy.parseAsync(filenames, function(data) {
 Licensed under the incredibly [permissive](http://en.wikipedia.org/wiki/Permissive_free_software_licence) [MIT license](http://creativecommons.org/licenses/MIT/)
 
 [deps-image]:https://david-dm.org/skiptirengu/anitomy-js.svg
-[travis-image]:https://img.shields.io/travis/skiptirengu/anitomy-js.svg?label=linux
-[appveyor-image]:https://img.shields.io/appveyor/ci/skiptirengu/anitomy-js.svg?label=windows
+[travis-image]:https://api.travis-ci.org/skiptirengu/anitomy-js.svg?branch=master
+[appveyor-image]:https://ci.appveyor.com/api/projects/status/eb0oky5iae827p0u/branch/master?svg=true
 [deps-url]:https://david-dm.org/skiptirengu/anitomy-js
 [appveyor-url]:https://ci.appveyor.com/project/skiptirengu/anitomy-js
 [travis-url]: https://travis-ci.org/skiptirengu/anitomy-js
