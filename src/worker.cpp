@@ -8,7 +8,7 @@
 
 namespace anitomyJs {
 
-Worker::Worker(Nan::Callback *callback) : Nan::AsyncWorker(callback){};
+Worker::Worker(Nan::Callback *callback) : Nan::AsyncWorker(callback, "anitomyJs:Worker"){};
 
 void Worker::Execute() { anitomy_.Parse(); }
 
