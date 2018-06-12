@@ -22,14 +22,16 @@
     "anitomy-js"
   ],
   "dependencies": {
-    "nan": "^2.0.0"
+    "nan": "^2.10.0"
   },
   "scripts": {
-    "test": "./node_modules/.bin/mocha"
+    "test": "./node_modules/.bin/mocha",
+    "build": "node-gyp rebuild"
   },
   "devDependencies": {
-    "chai": "^3.5.0",
-    "mocha": "^3.4.1"
+    "chai": "^4.1.2",
+    "mocha": "^5.2.0",
+    "node-gyp": "^3.7.0"
   },
   "engines": {
     "node": ">=0.12"
