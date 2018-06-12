@@ -30,7 +30,7 @@
                 "OTHER_CFLAGS": [
                     "-mmacosx-version-min=10.7",
                     "-stdlib=libc++",
-                    "-std=c++11"
+                    "-std=c++14"
                 ]
             },
             "cflags": [
