@@ -38,7 +38,8 @@
             ],
             "cflags_cc!": [
                 "-fno-rtti",
-                "-fno-exceptions"
+                "-fno-exceptions",
+                "-std=gnu++0x"
             ],
             "include_dirs": [
                 "<!(node -e \"require('nan')\")",

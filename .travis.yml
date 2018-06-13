@@ -7,10 +7,8 @@ addons:
     packages:
       - g++-5
       - gcc-5
-env: 
-  - CXX=g++-5
+env: CC=gcc-5 CXX=g++-5
 node_js:
-    - "0.12"
     - "4"
     - "5"
     - "6"
