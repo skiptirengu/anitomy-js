@@ -8,7 +8,7 @@
 
 namespace anitomyJs {
 
-Worker::Worker(Nan::Callback *callback) : Nan::AsyncWorker(callback){};
+Worker::Worker(Nan::Callback *callback) : Nan::AsyncWorker(callback, "anitomyJs:Worker"){};
 
 void Worker::Execute() { anitomy_.Parse(); }
 
@@ -19,6 +19,6 @@ void Worker::HandleOKCallback() {
   v8::Isolate *isolate = v8::Isolate::GetCurrent();
 
   v8::Local<v8::Value> argv[] = {anitomy_.ParsedResult(isolate)};
-  callback->Call(1, argv);
+  callback->Call(1, argv, async_resource);
 }
 }

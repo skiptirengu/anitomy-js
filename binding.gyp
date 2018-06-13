@@ -30,15 +30,16 @@
                 "OTHER_CFLAGS": [
                     "-mmacosx-version-min=10.7",
                     "-stdlib=libc++",
-                    "-std=c++11"
+                    "-std=c++14"
                 ]
             },
             "cflags": [
-                "-std=c++11"
+                "-std=c++14"
             ],
             "cflags_cc!": [
                 "-fno-rtti",
-                "-fno-exceptions"
+                "-fno-exceptions",
+                "-std=gnu++0x"
             ],
             "include_dirs": [
                 "<!(node -e \"require('nan')\")",

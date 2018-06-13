@@ -1,4 +1,4 @@
-# Anitomy-js
+# anitomy-js
 
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/nevermnd/anitomy-js/master/LICENSE)
 [![Dependencies][deps-image]][deps-url]
@@ -6,7 +6,7 @@
 [![Windows Build][appveyor-image]][appveyor-url]
 
 
-*Anitomy-js* is a Node.js wrapper for [Anitomy](https://github.com/erengy/anitomy) - a C++ library for parsing anime video filenames.
+*anitomy-js* is a Node.js wrapper for [Anitomy](https://github.com/erengy/anitomy) - a C++ library for parsing anime video filenames.
 
 ## Installation
 
@@ -15,11 +15,18 @@ With [npm](http://npmjs.org) do:
 ```
 npm install anitomy-js
 ```
-*Anitomy-js* builds it's dependencies upon installation. Please refer to the [node-gyp documentation](https://github.com/nodejs/node-gyp#installation) if you're having trouble with the build.
+*anitomy-js* builds it's dependencies upon installation. Please refer to the [node-gyp documentation](https://github.com/nodejs/node-gyp#installation) if you're having trouble with the build.
+
+Starting with version 2.0, *anitomy-js* requires C++ 14 to build:
++ Linux: GCC/G++ >= 5
++ Windows: Visual Studio >= 2015
++ Mac OS: Just update your Xcode :)
+
+If you can't update your build tools, all versions from 1.x which are compatible with C++ 11.
 
 ## Usage
 
-*Anitomy-js* provides two methods: `parseSync` and `parseAsync`. 
+*anitomy-js* provides two methods: `parseSync` and `parseAsync`. 
 Both methods accept single filename input or, an array of filenames for batch parsing.
 
 Additionally you can pass an object as the last parameter to change Anitomy's original parsing options. The options are the following:
