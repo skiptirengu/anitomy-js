@@ -22,7 +22,7 @@ Starting with version 2.0, *anitomy-js* requires C++ 14 to build:
 + Windows: Visual Studio >= 2015
 + Mac OS: Just update your Xcode :)
 
-If you can't update your build tools, all versions from 1.x which are compatible with C++ 11.
+If you can't update your build tools, all versions from 1.x are compatible with C++ 11.
 
 ## Usage
 
