@@ -27,18 +27,22 @@
                 "src/addon.cpp"
             ],
             "xcode_settings": {
-                "OTHER_CFLAGS": [
-                    "-mmacosx-version-min=10.7",
-                    "-stdlib=libc++",
-                    "-std=c++14"
+                "CLANG_CXX_LANGUAGE_STANDARD": "c++14",
+                "CLANG_CXX_LIBRARY": "libc++",
+                "MACOSX_DEPLOYMENT_TARGET": "10.9",
+                "GCC_ENABLE_CPP_EXCEPTIONS": "NO",
+                "GCC_ENABLE_CPP_RTTI": "NO",
+                "OTHER_CPLUSPLUSFLAGS": [
+                    "-Wall",
+                    "-O3"
                 ]
             },
-            "cflags": [
-                "-std=c++14"
+            "cflags_cc": [
+                "-std=c++14",
+                "-Wall",
+                "-O3"
             ],
             "cflags_cc!": [
-                "-fno-rtti",
-                "-fno-exceptions",
                 "-std=gnu++0x"
             ],
             "include_dirs": [
