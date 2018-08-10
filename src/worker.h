@@ -12,6 +12,8 @@
 
 namespace anitomyJs {
 
+using namespace v8;
+
 class Worker : public Nan::AsyncWorker {
 public:
   Worker(Nan::Callback *callback);
@@ -24,6 +26,6 @@ protected:
 private:
   anitomyJs::AnitomyJs anitomy_;
 };
-}
+} // namespace anitomyJs
 
 #endif
