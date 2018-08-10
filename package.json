@@ -13,8 +13,8 @@
   },
   "contributors": [
     {
-      "name": "Skiptir Engu",
-      "email": "skiptir.engu@yandex.com"
+      "name": "Thiago Oliveira",
+      "email": "thiago_ogt@outlook.com"
     }
   ],
   "keywords": [
@@ -31,7 +31,7 @@
   "devDependencies": {
     "chai": "^4.1.2",
     "mocha": "^5.2.0",
-    "node-gyp": "^3.7.0"
+    "node-gyp": "^3.8.0"
   },
   "engines": {
     "node": ">=4"
