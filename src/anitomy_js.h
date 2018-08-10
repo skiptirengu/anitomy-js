@@ -14,37 +14,35 @@
 
 namespace anitomyJs {
 
+using namespace v8;
+using namespace anitomy;
+using namespace std;
+
 class AnitomyJs {
 public:
-  void SetInput(v8::Local<v8::Value> value);
-  bool SetOptions(v8::Local<v8::Object> value, v8::Isolate *isolate);
+  void SetInput(Local<Value> value, Isolate *isolate);
+  bool SetOptions(Local<Object> value, Isolate *isolate);
   void Parse();
 
-  std::vector<anitomy::Elements> Parsed();
-  v8::Local<v8::Value> ParsedResult(v8::Isolate *isolate);
+  vector<Elements> Parsed();
+  Local<Value> ParsedResult(Isolate *isolate);
 
 private:
-  anitomy::Anitomy anitomy_;
-  std::vector<std::wstring> input_;
+  Anitomy anitomy_;
+  vector<wstring> input_;
 
-  std::vector<anitomy::Elements> parsed_;
+  vector<Elements> parsed_;
   bool is_batch_parse_;
 
-  std::wstring ToWideString(v8::Local<v8::Value> str);
-  std::string ToStr(anitomy::string_t str);
+  wstring ToWideString(Local<Value> str, Isolate *isolate);
+  string ToStr(string_t str);
 
-  bool BoolOption(const char *name, v8::Local<v8::Object> value,
-                  v8::Isolate *isolate);
+  bool BoolOption(const char *name, Local<Object> value, Isolate *isolate);
 
-  v8::Local<v8::Object> BuildObject(anitomy::Elements &elements,
-                                    v8::Isolate *isolate);
-  void SetEntry(v8::Local<v8::Object> &object, v8::Isolate *isolate,
-                const char *entry, anitomy::Elements &elements,
-                anitomy::ElementCategory pos);
-  v8::Local<v8::Array> CategoryArray(anitomy::Elements &elements,
-                                     anitomy::ElementCategory pos,
-                                     v8::Isolate *isolate);
+  Local<Object> BuildObject(Elements &elements, Isolate *isolate);
+  void SetEntry(Local<Object> &object, Isolate *isolate, const char *entry, Elements &elements, ElementCategory pos);
+  Local<Array> CategoryArray(Elements &elements, ElementCategory pos, Isolate *isolate);
 };
-}
+} // namespace anitomyJs
 
 #endif

@@ -16,9 +16,9 @@ anitomyJs::AnitomyJs *Worker::GetAnitomy() { return &anitomy_; }
 
 void Worker::HandleOKCallback() {
   Nan::HandleScope scope;
-  v8::Isolate *isolate = v8::Isolate::GetCurrent();
+  Isolate *isolate = Isolate::GetCurrent();
 
-  v8::Local<v8::Value> argv[] = {anitomy_.ParsedResult(isolate)};
+  Local<Value> argv[] = {anitomy_.ParsedResult(isolate)};
   callback->Call(1, argv, async_resource);
 }
-}
+} // namespace anitomyJs
