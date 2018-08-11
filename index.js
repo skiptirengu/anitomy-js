@@ -4,15 +4,21 @@ var anitomy = require('./build/Release/anitomy-js')
 var util = require('util')
 
 /**
- * @param {array|string} input 
- * @param {function} callback
- * @param {object} options 
+ * @param {array|string} input
+ * @param {function} [callback]
+ * @param {object} [options]
  * @returns {Promise<object>|undefined}
  */
-function parseAsync(input, callback, options) {
+function parseAsync (input, callback, options) {
+  var args = arguments.length
 
-  if (typeof callback === 'object') {
+  if (args === 2 && typeof callback === 'object') {
     options = callback
+    callback = null
+  } else if (args === 2) {
+    options = {}
+  } else if (args === 1) {
+    options = {}
     callback = null
   }
 
@@ -37,7 +43,7 @@ function parseAsync(input, callback, options) {
       if (callback) {
         callback(undefined, parsed)
       } else {
-        return parsed
+        return Promise.resolve(parsed)
       }
     })
     .catch(function (err) {
@@ -50,11 +56,12 @@ function parseAsync(input, callback, options) {
 }
 
 /**
- * @param {array|string} input 
- * @param {object} options 
+ * @param {array|string} input
+ * @param {object} [options]
  * @returns {array|object}
  */
-function parseSync(input, options) {
+function parseSync (input, options) {
+  options = options || {}
   return anitomy.parseSync(input, options)
 }
 
