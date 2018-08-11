@@ -177,18 +177,23 @@ describe('anitomy-js', function () {
 
     it('should emit deprecation warning on single argument callback', function (done) {
       // warning event was only implemented on node > 6
-      if (Number(process.version.match(/^v(\d+\.\d+)/)[ 1 ]) < 6) {
+      var nodeVersion = Number(process.version.match(/^v(\d+\.\d+)/)[ 1 ])
+      if (nodeVersion < 6) {
         this.skip()
       } else {
         var originalErr = console.error
         console.error = function () {
           // prevent output pollution
         }
-        process.on('warning', function (dep) {
+        process.on('warning', function (err) {
           console.error = originalErr
-          expect(dep.code).to.be.equals('anitomy-js#parseAsync')
-          expect(dep.name).to.be.equals('DeprecationWarning')
-          expect(dep.message).to.be.equal('Using a callback with only one argument is deprecated. Switch to using a node style callback (err, data) or use the promise api.')
+          if (nodeVersion <= 7) {
+            expect(err.message).to.be.equals('Using a callback with only one argument is deprecated. Switch to using a node style callback (err, data) or use the promise api.')
+          } else {
+            expect(err.code).to.be.equals('anitomy-js#parseAsync')
+            expect(err.name).to.be.equals('DeprecationWarning')
+            expect(err.message).to.be.equal('Using a callback with only one argument is deprecated. Switch to using a node style callback (err, data) or use the promise api.')
+          }
           done()
         })
         anitomy.parseAsync('', function (data) {
