@@ -4,6 +4,8 @@
  * MIT License <https://github.com/nevermnd/anitomy-js/blob/master/LICENSE>
  ********************************************************************/
 
+'use strict'
+
 var chai = require('chai')
 var expect = chai.expect
 var anitomy = require('../index.js')
@@ -55,7 +57,7 @@ describe('anitomy-js', function () {
     })
 
     it('should override default delimiters', function () {
-      let parsed = anitomy.parseSync(
+      var parsed = anitomy.parseSync(
         '[chibi-Doki] Seikon no Qwaser - 13v0 (Uncensored Director\'s Cut) [988DB090].mkv',
         { 'allowed_delimiters': '_.&+,|' }
       )
@@ -174,20 +176,25 @@ describe('anitomy-js', function () {
     })
 
     it('should emit deprecation warning on single argument callback', function (done) {
-      var originalErr = console.error
-      console.error = function () {
-        // prevent output pollution
+      // warning event was only implemented on node > 6
+      if (Number(process.version.match(/^v(\d+\.\d+)/)[ 1 ]) < 6) {
+        this.skip()
+      } else {
+        var originalErr = console.error
+        console.error = function () {
+          // prevent output pollution
+        }
+        process.on('warning', function (dep) {
+          console.error = originalErr
+          expect(dep.code).to.be.equals('anitomy-js#parseAsync')
+          expect(dep.name).to.be.equals('DeprecationWarning')
+          expect(dep.message).to.be.equal('Using a callback with only one argument is deprecated. Switch to using a node style callback (err, data) or use the promise api.')
+          done()
+        })
+        anitomy.parseAsync('', function (data) {
+          //
+        })
       }
-      process.on('warning', function (dep) {
-        console.error = originalErr
-        expect(dep.code).to.be.equals('anitomy-js#parseAsync')
-        expect(dep.name).to.be.equals('DeprecationWarning')
-        expect(dep.message).to.be.equal('Using a callback with only one argument is deprecated. Switch to using a node style callback (err, data) or use the promise api.')
-        done()
-      })
-      anitomy.parseAsync('', function (data) {
-        //
-      })
     })
 
     it('should accept callback with two arguments with data as 2nd argument', function (done) {
