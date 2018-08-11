@@ -187,7 +187,7 @@ describe('anitomy-js', function () {
         }
         process.on('warning', function (err) {
           console.error = originalErr
-          if (nodeVersion <= 7) {
+          if (nodeVersion < 8) {
             expect(err.message).to.be.equals('Using a callback with only one argument is deprecated. Switch to using a node style callback (err, data) or use the promise api.')
           } else {
             expect(err.code).to.be.equals('anitomy-js#parseAsync')
