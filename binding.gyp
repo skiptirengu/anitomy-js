@@ -38,12 +38,15 @@
                 ]
             },
             "cflags_cc": [
+                "-fno-exceptions",
+                "-fno-rtti",
                 "-std=c++14",
                 "-Wall",
                 "-O3"
             ],
             "cflags_cc!": [
-                "-std=gnu++0x"
+                "-std=gnu++0x",
+                "-std=gnu++1y"
             ],
             "include_dirs": [
                 "<!(node -e \"require('nan')\")",
