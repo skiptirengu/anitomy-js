@@ -20,13 +20,15 @@ npm install anitomy-js
 Starting with version 2.0, *anitomy-js* requires C++ 14 to build:
 + Linux: GCC/G++ >= 5
 + Windows: Visual Studio >= 2015
-+ Mac OS: Just update your Xcode :)
++ Mac OS >= 10.9
 
 If you can't update your build tools, all versions from 1.x are compatible with C++ 11.
 
+Starting with version 3.0 the old callback style with a single argument is deprecated. You should switch to either use the Promise API or a node style callback (err, data).
+
 ## Usage
 
-*anitomy-js* provides two methods: `parseSync` and `parseAsync`. 
+*anitomy-js* provides two methods: `parse` and `parseSync`. 
 Both methods accept single filename input or, an array of filenames for batch parsing.
 
 Additionally you can pass an object as the last parameter to change Anitomy's original parsing options. The options are the following:
@@ -38,11 +40,12 @@ Additionally you can pass an object as the last parameter to change Anitomy's or
 + `parse_file_extension` - defaults to `true`
 + `parse_release_group` - defaults to `true`
  
-### parseSync()
+### parse(data, [callback], [options])
 
 ```js
 var anitomy = require('anitomy-js');
-anitomy.parseSync("[tlacatlc6] Natsume Yuujinchou Shi Vol. 1v2 & Vol. 2 (BD 1280x720 x264 AAC)");
+anitomy.parse("[tlacatlc6] Natsume Yuujinchou Shi Vol. 1v2 & Vol. 2 (BD 1280x720 x264 AAC)")
+       .then((data) => console.log(data));
 ```
 ... would be parsed into
 
@@ -63,14 +66,12 @@ anitomy.parseSync("[tlacatlc6] Natsume Yuujinchou Shi Vol. 1v2 & Vol. 2 (BD 1280
 }
 ```
 
-### parseAsync()
+### parseSync(data, [options])
 
 ```js
 var anitomy = require('anitomy-js');
 var filenames = ["[DmonHiro] Magi - The Labyrinth Of Magic - Vol.1v2 (BD, 720p)", "[KLF]_D.Gray-man_04V2.avi"];
-anitomy.parseAsync(filenames, function(data) {
-    // ...
-});
+console.log(anitomy.parseSync(filenames))
 ```
 
 ... would be parsed into
