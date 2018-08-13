@@ -1,0 +1,13 @@
+.idea
+.vscode
+build
+node_modules
+test/
+.clang-format
+.travis.yml
+appveyor.yml
+npm-debug.log
+.eslintrc.js
+lib/anitomy/.git
+lib/anitomy/test/data.json
+.gitmodules
