@@ -40,7 +40,7 @@ Additionally you can pass an object as the last parameter to change Anitomy's or
 + `parse_file_extension` - defaults to `true`
 + `parse_release_group` - defaults to `true`
  
-### parse(data, [callback], [options])
+### parse(data, [callback], [options]) -> Promise<any>
 
 ```js
 var anitomy = require('anitomy-js');
@@ -66,7 +66,7 @@ anitomy.parse("[tlacatlc6] Natsume Yuujinchou Shi Vol. 1v2 & Vol. 2 (BD 1280x720
 }
 ```
 
-### parseSync(data, [options])
+### parseSync(data, [options]) -> any
 
 ```js
 var anitomy = require('anitomy-js');
