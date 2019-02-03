@@ -46,7 +46,7 @@ bool AnitomyJs::SetOptions(Local<Object> value, Isolate *isolate) {
     unsigned int ignored_strings_length = ignored_strings->Length();
     vector<string_t> strings(ignored_strings_length);
     for (unsigned int i = 0; i < ignored_strings_length; i++) {
-      strings.push_back(ToWideString(ignored_strings->Get(i)->ToString(), isolate));
+      strings.push_back(ToWideString(ignored_strings->Get(i)->ToString(isolate->GetCurrentContext()).ToLocalChecked(), isolate));
     }
     anitomy_options.ignored_strings = strings;
   }
@@ -61,7 +61,8 @@ bool AnitomyJs::SetOptions(Local<Object> value, Isolate *isolate) {
 
 bool AnitomyJs::BoolOption(const char *name, Local<Object> value, Isolate *isolate) {
   Local<String> entry_name = String::NewFromUtf8(isolate, name);
-  return value->Has(entry_name) ? value->Get(entry_name)->ToBoolean()->IsTrue() : true;
+  return value->Has(entry_name) ? value->Get(entry_name)->ToBoolean(isolate->GetCurrentContext()).ToLocalChecked()->IsTrue()
+                                : true;
 }
 
 void AnitomyJs::Parse() {
@@ -88,10 +89,12 @@ Local<Value> AnitomyJs::ParsedResult(Isolate *isolate) {
 }
 
 wstring AnitomyJs::ToWideString(Local<Value> str, Isolate *isolate) {
-#if NODE_MAJOR_VERSION >= 10
-  String::Utf8Value utf_value(isolate, str->ToString());
+  Local<String> localStr = str->ToString(isolate->GetCurrentContext()).ToLocalChecked();
+
+#if NODE_MAJOR_VERSION >= 8
+  String::Utf8Value utf_value(isolate, localStr);
 #else
-  String::Utf8Value utf_value(str->ToString());
+  String::Utf8Value utf_value(localStr);
 #endif
   string str_value(*utf_value);
   return wstring(str_value.begin(), str_value.end());
