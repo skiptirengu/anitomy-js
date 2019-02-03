@@ -1,6 +1,6 @@
 {
   "name": "anitomy-js",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "main": "index.js",
   "description": "Node.js wrapper for anitomy",
   "license": "MIT",
@@ -22,22 +22,23 @@
     "anitomy-js"
   ],
   "dependencies": {
-    "nan": "^2.10.0"
+    "nan": "^2.12.1"
   },
   "scripts": {
     "test": "./node_modules/.bin/mocha",
     "build": "node-gyp rebuild",
     "lint": "eslint index.js test/",
-    "lint:fix": "eslint index.js test/ --fix"
+    "lint:fix": "eslint index.js test/ --fix",
+    "format:cpp": "clang-format -i -style=file src/*.*"
   },
   "devDependencies": {
-    "@types/chai": "^4.1.4",
+    "@types/chai": "^4.1.7",
     "@types/chai-as-promised": "^7.1.0",
-    "chai": "^4.1.2",
+    "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
-    "eslint": "^5.3.0",
-    "eslint-config-standard": "^12.0.0-alpha.0",
-    "eslint-plugin-import": "^2.13.0",
+    "eslint": "^5.13.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.16.0",
     "eslint-plugin-node": "^7.0.1",
     "eslint-plugin-promise": "^3.8.0",
     "eslint-plugin-standard": "^3.1.0",

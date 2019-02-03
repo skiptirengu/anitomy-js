@@ -44,7 +44,8 @@ void ParseSync(const Nan::FunctionCallbackInfo<Value> &args) {
   anitomyJs::AnitomyJs anitomy;
   if (args_length >= 2) {
     Local<Value> options = args[1];
-    if (!ValidateOptions(options, isolate) || !anitomy.SetOptions(options->ToObject(), isolate)) {
+    if (!ValidateOptions(options, isolate) ||
+        !anitomy.SetOptions(options->ToObject(isolate->GetCurrentContext()).ToLocalChecked(), isolate)) {
       return;
     }
   }
@@ -78,7 +79,8 @@ void ParseAsync(const Nan::FunctionCallbackInfo<Value> &args) {
 
   if (args_length >= 3) {
     Local<Value> options = args[2];
-    if (!ValidateOptions(options, isolate) || !worker->GetAnitomy()->SetOptions(options->ToObject(), isolate)) {
+    if (!ValidateOptions(options, isolate) ||
+        !worker->GetAnitomy()->SetOptions(options->ToObject(isolate->GetCurrentContext()).ToLocalChecked(), isolate)) {
       return;
     }
   }
