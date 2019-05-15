@@ -90,9 +90,12 @@ void ParseAsync(const Nan::FunctionCallbackInfo<Value> &args) {
   args.GetReturnValue().Set(Nan::Undefined());
 }
 
-void Init(Local<Object> exports) {
-  exports->Set(Nan::New("parseSync").ToLocalChecked(), Nan::New<FunctionTemplate>(ParseSync)->GetFunction());
-  exports->Set(Nan::New("parseAsync").ToLocalChecked(), Nan::New<FunctionTemplate>(ParseAsync)->GetFunction());
+void Init(Local<Object> exports, Local<Object> module) {
+  Isolate *isolate = exports->GetIsolate();
+  exports->Set(Nan::New("parseSync").ToLocalChecked(),
+               Nan::New<FunctionTemplate>(ParseSync)->GetFunction(isolate->GetCurrentContext()).ToLocalChecked());
+  exports->Set(Nan::New("parseAsync").ToLocalChecked(),
+               Nan::New<FunctionTemplate>(ParseAsync)->GetFunction(isolate->GetCurrentContext()).ToLocalChecked());
 }
 
 NODE_MODULE(anitomy, Init)
