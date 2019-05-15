@@ -26,7 +26,7 @@ bool AnitomyJs::SetOptions(Local<Object> value, Isolate *isolate) {
   Options &anitomy_options = anitomy_.options();
 
   // Parse allowed_delimiters option
-  if (value->Has(allowed_delimiters_str)) {
+  if (value->Has(isolate->GetCurrentContext(), allowed_delimiters_str).FromJust()) {
     Local<Value> allowed_delimiters = value->Get(allowed_delimiters_str);
     if (!allowed_delimiters->IsString()) {
       isolate->ThrowException(Exception::TypeError(String::NewFromUtf8(isolate, "allowed_delimiters must be a string")));
@@ -36,7 +36,7 @@ bool AnitomyJs::SetOptions(Local<Object> value, Isolate *isolate) {
   }
 
   // Parse ignored_strings option
-  if (value->Has(ignored_strings_str)) {
+  if (value->Has(isolate->GetCurrentContext(), ignored_strings_str).FromJust()) {
     Local<Value> string_array = value->Get(ignored_strings_str);
     if (!string_array->IsArray()) {
       isolate->ThrowException(Exception::TypeError(String::NewFromUtf8(isolate, "ignored_strings must be an array")));
@@ -61,8 +61,9 @@ bool AnitomyJs::SetOptions(Local<Object> value, Isolate *isolate) {
 
 bool AnitomyJs::BoolOption(const char *name, Local<Object> value, Isolate *isolate) {
   Local<String> entry_name = String::NewFromUtf8(isolate, name);
-  return value->Has(entry_name) ? value->Get(entry_name)->ToBoolean(isolate->GetCurrentContext()).ToLocalChecked()->IsTrue()
-                                : true;
+  return value->Has(isolate->GetCurrentContext(), entry_name).FromJust()
+             ? value->Get(entry_name)->ToBoolean(isolate->GetCurrentContext()).ToLocalChecked()->IsTrue()
+             : true;
 }
 
 void AnitomyJs::Parse() {

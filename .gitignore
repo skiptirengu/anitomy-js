@@ -7,3 +7,4 @@ npm-debug.log
 jsconfig.json
 /.idea/
 .DS_Store
+.vs/
