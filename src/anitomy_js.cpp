@@ -65,9 +65,15 @@ bool AnitomyJs::SetOptions(Local<Object> value, Isolate *isolate) {
 }
 
 bool AnitomyJs::BoolOption(const char *name, Local<Object> value, Isolate *isolate) {
+  Local<Context> context = isolate->GetCurrentContext();
   Local<String> entry_name = String::NewFromUtf8(isolate, name, NewStringType::kNormal).ToLocalChecked();
-  return value->Has(isolate->GetCurrentContext(), entry_name).FromJust()
-             ? value->Get(isolate->GetCurrentContext(), entry_name).ToLocalChecked()->ToBoolean(isolate)->IsTrue()
+  return value->Has(context, entry_name).FromJust()
+             ?
+#if NODE_MAJOR_VERSION >= 12
+             value->Get(isolate->GetCurrentContext(), entry_name).ToLocalChecked()->ToBoolean(isolate)->IsTrue()
+#else
+             value->Get(context, entry_name).ToLocalChecked()->ToBoolean(context).ToLocalChecked()->IsTrue()
+#endif
              : true;
 }
 
