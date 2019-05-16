@@ -14,14 +14,16 @@ using namespace v8;
 bool ValidateInput(Local<Value> value, Isolate *isolate) {
   bool valid = value->IsString() || value->IsArray();
   if (!valid) {
-    isolate->ThrowException(Exception::TypeError(String::NewFromUtf8(isolate, "Wrong data type")));
+    isolate->ThrowException(
+        Exception::TypeError(String::NewFromUtf8(isolate, "Wrong data type", NewStringType::kNormal).ToLocalChecked()));
   }
   return valid;
 }
 
 bool ValidateOptions(Local<Value> options, Isolate *isolate) {
   if (!options->IsObject()) {
-    isolate->ThrowException(Exception::TypeError(String::NewFromUtf8(isolate, "Options must be an object")));
+    isolate->ThrowException(
+        Exception::TypeError(String::NewFromUtf8(isolate, "Options must be an object", NewStringType::kNormal).ToLocalChecked()));
     return false;
   }
   return true;
@@ -32,7 +34,8 @@ void ParseSync(const Nan::FunctionCallbackInfo<Value> &args) {
   int args_length = args.Length();
 
   if (args_length < 1) {
-    isolate->ThrowException(Exception::TypeError(String::NewFromUtf8(isolate, "Wrong number of arguments")));
+    isolate->ThrowException(
+        Exception::TypeError(String::NewFromUtf8(isolate, "Wrong number of arguments", NewStringType::kNormal).ToLocalChecked()));
     return;
   }
 
@@ -61,7 +64,8 @@ void ParseAsync(const Nan::FunctionCallbackInfo<Value> &args) {
   int args_length = args.Length();
 
   if (args_length < 2) {
-    isolate->ThrowException(Exception::TypeError(String::NewFromUtf8(isolate, "Wrong number of arguments")));
+    isolate->ThrowException(
+        Exception::TypeError(String::NewFromUtf8(isolate, "Wrong number of arguments", NewStringType::kNormal).ToLocalChecked()));
     return;
   }
 
@@ -70,7 +74,8 @@ void ParseAsync(const Nan::FunctionCallbackInfo<Value> &args) {
     return;
   }
   if (!args[1]->IsFunction()) {
-    isolate->ThrowException(Exception::TypeError(String::NewFromUtf8(isolate, "Second parameter must be a callback")));
+    isolate->ThrowException(Exception::TypeError(
+        String::NewFromUtf8(isolate, "Second parameter must be a callback", NewStringType::kNormal).ToLocalChecked()));
     return;
   }
 
