@@ -21,15 +21,17 @@ void AnitomyJs::SetInput(Local<Value> value, Isolate *isolate) {
 }
 
 bool AnitomyJs::SetOptions(Local<Object> value, Isolate *isolate) {
-  Local<String> allowed_delimiters_str = String::NewFromUtf8(isolate, "allowed_delimiters");
-  Local<String> ignored_strings_str = String::NewFromUtf8(isolate, "ignored_strings");
+  Local<String> allowed_delimiters_str =
+      String::NewFromUtf8(isolate, "allowed_delimiters", NewStringType::kNormal).ToLocalChecked();
+  Local<String> ignored_strings_str = String::NewFromUtf8(isolate, "ignored_strings", NewStringType::kNormal).ToLocalChecked();
   Options &anitomy_options = anitomy_.options();
 
   // Parse allowed_delimiters option
   if (value->Has(isolate->GetCurrentContext(), allowed_delimiters_str).FromJust()) {
     Local<Value> allowed_delimiters = value->Get(allowed_delimiters_str);
     if (!allowed_delimiters->IsString()) {
-      isolate->ThrowException(Exception::TypeError(String::NewFromUtf8(isolate, "allowed_delimiters must be a string")));
+      isolate->ThrowException(Exception::TypeError(
+          String::NewFromUtf8(isolate, "allowed_delimiters must be a string", NewStringType::kNormal).ToLocalChecked()));
       return false;
     }
     anitomy_options.allowed_delimiters = ToWideString(allowed_delimiters, isolate);
@@ -39,7 +41,8 @@ bool AnitomyJs::SetOptions(Local<Object> value, Isolate *isolate) {
   if (value->Has(isolate->GetCurrentContext(), ignored_strings_str).FromJust()) {
     Local<Value> string_array = value->Get(ignored_strings_str);
     if (!string_array->IsArray()) {
-      isolate->ThrowException(Exception::TypeError(String::NewFromUtf8(isolate, "ignored_strings must be an array")));
+      isolate->ThrowException(Exception::TypeError(
+          String::NewFromUtf8(isolate, "ignored_strings must be an array", NewStringType::kNormal).ToLocalChecked()));
       return false;
     }
     Local<Array> ignored_strings = Local<Array>::Cast(string_array);
@@ -60,10 +63,9 @@ bool AnitomyJs::SetOptions(Local<Object> value, Isolate *isolate) {
 }
 
 bool AnitomyJs::BoolOption(const char *name, Local<Object> value, Isolate *isolate) {
-  Local<String> entry_name = String::NewFromUtf8(isolate, name);
-  return value->Has(isolate->GetCurrentContext(), entry_name).FromJust()
-             ? value->Get(entry_name)->ToBoolean(isolate->GetCurrentContext()).ToLocalChecked()->IsTrue()
-             : true;
+  Local<String> entry_name = String::NewFromUtf8(isolate, name, NewStringType::kNormal).ToLocalChecked();
+  return value->Has(isolate->GetCurrentContext(), entry_name).FromJust() ? value->Get(entry_name)->ToBoolean(isolate)->IsTrue()
+                                                                         : true;
 }
 
 void AnitomyJs::Parse() {
@@ -107,12 +109,13 @@ string AnitomyJs::ToStr(string_t str) {
 }
 
 void AnitomyJs::SetEntry(Local<Object> &object, Isolate *isolate, const char *entry, Elements &elements, ElementCategory pos) {
-  Local<String> entry_name = String::NewFromUtf8(isolate, entry);
+  Local<String> entry_name = String::NewFromUtf8(isolate, entry, NewStringType::kNormal).ToLocalChecked();
   switch (elements.count(pos)) {
   case 0:
     break;
   case 1:
-    object->Set(entry_name, String::NewFromUtf8(isolate, ToStr(elements.get(pos)).c_str()));
+    object->Set(entry_name,
+                String::NewFromUtf8(isolate, ToStr(elements.get(pos)).c_str(), NewStringType::kNormal).ToLocalChecked());
     break;
   default:
     object->Set(entry_name, CategoryArray(elements, pos, isolate));
@@ -124,7 +127,7 @@ Local<Array> AnitomyJs::CategoryArray(Elements &elements, ElementCategory pos, I
   Local<Array> output = Array::New(isolate, category_elements.size());
   unsigned int index = 0;
   for (string_t value : category_elements) {
-    output->Set(index, String::NewFromUtf8(isolate, ToStr(value).c_str()));
+    output->Set(index, String::NewFromUtf8(isolate, ToStr(value).c_str(), NewStringType::kNormal).ToLocalChecked());
     index++;
   }
   return output;
