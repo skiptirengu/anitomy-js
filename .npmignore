@@ -11,3 +11,4 @@ npm-debug.log
 lib/anitomy/.git
 lib/anitomy/test/data.json
 .gitmodules
+.vs/
