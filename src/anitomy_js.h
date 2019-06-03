@@ -4,8 +4,7 @@
  * MIT License <https://github.com/nevermnd/anitomy-js/blob/master/LICENSE>
  ********************************************************************/
 
-#ifndef ANITOMY_JS_ANITOMY_JS_H_
-#define ANITOMY_JS_ANITOMY_JS_H_
+#pragma once
 
 #include <anitomy/anitomy.h>
 #include <nan.h>
@@ -44,5 +43,3 @@ private:
   Local<Array> CategoryArray(Elements &elements, ElementCategory pos, Isolate *isolate);
 };
 } // namespace anitomyJs
-
-#endif

@@ -14,16 +14,14 @@ using namespace v8;
 bool ValidateInput(Local<Value> value, Isolate *isolate) {
   bool valid = value->IsString() || value->IsArray();
   if (!valid) {
-    isolate->ThrowException(
-        Exception::TypeError(String::NewFromUtf8(isolate, "Wrong data type", NewStringType::kNormal).ToLocalChecked()));
+    isolate->ThrowException(Exception::TypeError(Nan::New("Wrong data type").ToLocalChecked()));
   }
   return valid;
 }
 
 bool ValidateOptions(Local<Value> options, Isolate *isolate) {
   if (!options->IsObject()) {
-    isolate->ThrowException(
-        Exception::TypeError(String::NewFromUtf8(isolate, "Options must be an object", NewStringType::kNormal).ToLocalChecked()));
+    isolate->ThrowException(Exception::TypeError(Nan::New("Options must be an object").ToLocalChecked()));
     return false;
   }
   return true;
@@ -34,8 +32,7 @@ void ParseSync(const Nan::FunctionCallbackInfo<Value> &args) {
   int args_length = args.Length();
 
   if (args_length < 1) {
-    isolate->ThrowException(
-        Exception::TypeError(String::NewFromUtf8(isolate, "Wrong number of arguments", NewStringType::kNormal).ToLocalChecked()));
+    isolate->ThrowException(Exception::TypeError(Nan::New("Wrong number of arguments").ToLocalChecked()));
     return;
   }
 
@@ -60,12 +57,13 @@ void ParseSync(const Nan::FunctionCallbackInfo<Value> &args) {
 }
 
 void ParseAsync(const Nan::FunctionCallbackInfo<Value> &args) {
+  args.GetReturnValue().SetUndefined();
+  
   Isolate *isolate = args.GetIsolate();
   int args_length = args.Length();
 
   if (args_length < 2) {
-    isolate->ThrowException(
-        Exception::TypeError(String::NewFromUtf8(isolate, "Wrong number of arguments", NewStringType::kNormal).ToLocalChecked()));
+    isolate->ThrowException(Exception::TypeError(Nan::New("Wrong number of arguments").ToLocalChecked()));
     return;
   }
 
@@ -74,8 +72,7 @@ void ParseAsync(const Nan::FunctionCallbackInfo<Value> &args) {
     return;
   }
   if (!args[1]->IsFunction()) {
-    isolate->ThrowException(Exception::TypeError(
-        String::NewFromUtf8(isolate, "Second parameter must be a callback", NewStringType::kNormal).ToLocalChecked()));
+    isolate->ThrowException(Exception::TypeError(Nan::New("Second parameter must be a callback").ToLocalChecked()));
     return;
   }
 
@@ -92,7 +89,6 @@ void ParseAsync(const Nan::FunctionCallbackInfo<Value> &args) {
 
   worker->GetAnitomy()->SetInput(input, isolate);
   Nan::AsyncQueueWorker(worker);
-  args.GetReturnValue().SetUndefined();
 }
 
 void Init(Local<Object> exports, Local<Object> module) {

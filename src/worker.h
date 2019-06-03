@@ -4,8 +4,7 @@
  * MIT License <https://github.com/nevermnd/anitomy-js/blob/master/LICENSE>
  ********************************************************************/
 
-#ifndef ANITOMY_JS_WORKER_H_
-#define ANITOMY_JS_WORKER_H_
+#pragma once
 
 #include "anitomy_js.h"
 #include <nan.h>
@@ -27,5 +26,3 @@ private:
   anitomyJs::AnitomyJs anitomy_;
 };
 } // namespace anitomyJs
-
-#endif
