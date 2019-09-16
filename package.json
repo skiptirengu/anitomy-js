@@ -22,7 +22,7 @@
     "anitomy-js"
   ],
   "dependencies": {
-    "nan": "^2.13.2"
+    "nan": "^2.14.0"
   },
   "scripts": {
     "test": "./node_modules/.bin/mocha",
