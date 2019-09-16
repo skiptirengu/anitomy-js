@@ -95,9 +95,9 @@ void Init(Local<Object> exports, Local<Object> module) {
   Isolate *isolate = exports->GetIsolate();
   Local<Context> context = isolate->GetCurrentContext();
   exports->Set(context, Nan::New("parseSync").ToLocalChecked(),
-               Nan::New<FunctionTemplate>(ParseSync)->GetFunction(context).ToLocalChecked());
+               Nan::New<FunctionTemplate>(ParseSync)->GetFunction(context).ToLocalChecked()).IsJust();
   exports->Set(context, Nan::New("parseAsync").ToLocalChecked(),
-               Nan::New<FunctionTemplate>(ParseAsync)->GetFunction(context).ToLocalChecked());
+               Nan::New<FunctionTemplate>(ParseAsync)->GetFunction(context).ToLocalChecked()).IsJust();
 }
 
 NODE_MODULE(anitomy, Init)
