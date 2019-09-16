@@ -87,7 +87,7 @@ Local<Value> AnitomyJs::ParsedResult(Isolate *isolate) {
   Local<Array> output = Array::New(isolate, parsed_.size());
   unsigned int index = 0;
   for (Elements element : parsed_) {
-    output->Set(isolate->GetCurrentContext(), index, BuildObject(element, isolate));
+    output->Set(isolate->GetCurrentContext(), index, BuildObject(element, isolate)).IsJust();
     index++;
   }
   if (is_batch_parse_) {
@@ -121,10 +121,10 @@ void AnitomyJs::SetEntry(Local<Object> &object, Isolate *isolate, const char *en
   case 0:
     break;
   case 1:
-    object->Set(context, entry_name, Nan::New(ToStr(elements.get(pos)).c_str()).ToLocalChecked());
+    object->Set(context, entry_name, Nan::New(ToStr(elements.get(pos)).c_str()).ToLocalChecked()).IsJust();
     break;
   default:
-    object->Set(context, entry_name, CategoryArray(elements, pos, isolate));
+    object->Set(context, entry_name, CategoryArray(elements, pos, isolate)).IsJust();
   }
 }
 
@@ -133,7 +133,7 @@ Local<Array> AnitomyJs::CategoryArray(Elements &elements, ElementCategory pos, I
   Local<Array> output = Array::New(isolate, category_elements.size());
   unsigned int index = 0;
   for (string_t value : category_elements) {
-    output->Set(isolate->GetCurrentContext(), index, Nan::New(ToStr(value).c_str()).ToLocalChecked());
+    output->Set(isolate->GetCurrentContext(), index, Nan::New(ToStr(value).c_str()).ToLocalChecked()).IsJust();
     index++;
   }
   return output;
