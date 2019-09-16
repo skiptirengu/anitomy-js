@@ -1,9 +1,8 @@
 # anitomy-js
 
+[![Actions Status](https://github.com/skiptirengu/anitomy-js/workflows/Node CI/badge.svg)](https://github.com/skiptirengu/anitomy-js/actions)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/nevermnd/anitomy-js/master/LICENSE)
 [![Dependencies][deps-image]][deps-url]
-[![Linux Build][travis-image]][travis-url]
-[![Windows Build][appveyor-image]][appveyor-url]
 
 
 *anitomy-js* is a Node.js wrapper for [Anitomy](https://github.com/erengy/anitomy) - a C++ library for parsing anime video filenames.
