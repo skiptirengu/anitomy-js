@@ -33,18 +33,18 @@
     "format:cpp": "clang-format -i -style=file src/*.*"
   },
   "devDependencies": {
-    "@types/chai": "^4.1.7",
-    "@types/chai-as-promised": "^7.1.0",
+    "@types/chai": "^4.2.4",
+    "@types/chai-as-promised": "^7.1.2",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
-    "eslint": "^5.16.0",
-    "eslint-config-standard": "^12.0.0",
-    "eslint-plugin-import": "^2.17.2",
-    "eslint-plugin-node": "^9.0.1",
-    "eslint-plugin-promise": "^4.1.1",
-    "eslint-plugin-standard": "^4.0.0",
-    "mocha": "^6.1.4",
-    "node-gyp": "^4.0.0"
+    "eslint": "^6.6.0",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-node": "^10.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "mocha": "^6.2.2",
+    "node-gyp": "^6.0.1"
   },
   "engines": {
     "node": ">=6"

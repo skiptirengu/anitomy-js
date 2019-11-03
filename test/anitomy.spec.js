@@ -1,9 +1,3 @@
-/*********************************************************************
- * AnitomyJs - Node.js wrapper for Anitomy
- *
- * MIT License <https://github.com/nevermnd/anitomy-js/blob/master/LICENSE>
- ********************************************************************/
-
 'use strict'
 
 var chai = require('chai')

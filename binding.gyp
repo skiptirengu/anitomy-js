@@ -20,11 +20,13 @@
                 "lib/anitomy/anitomy/token.h",
                 "lib/anitomy/anitomy/tokenizer.cpp",
                 "lib/anitomy/anitomy/tokenizer.h",
-                "src/anitomy_js.h",
-                "src/anitomy_js.cpp",
-                "src/worker.h",
-                "src/worker.cpp",
-                "src/addon.cpp"
+                "src/addon.cc",
+                "src/parser.hpp",
+                "src/parser.cc",
+                "src/parser_worker.hpp",
+                "src/parser_worker.cc",
+                "src/validate.hpp",
+                "src/validate.cc"
             ],
             "xcode_settings": {
                 "CLANG_CXX_LANGUAGE_STANDARD": "c++14",
@@ -50,7 +52,7 @@
             ],
             "include_dirs": [
                 "<!(node -e \"require('nan')\")",
-                "lib/anitomy"
+                "./lib/anitomy/"
             ]
         }
     ]
