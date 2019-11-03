@@ -52,8 +52,10 @@ void ParseSync(const FunctionCallbackInfo<Value> &args) {
 }
 
 NAN_MODULE_INIT(InitAddon) {
-  Set(target, New<String>("parseSync").ToLocalChecked(), GetFunction(New<FunctionTemplate>(ParseSync)).ToLocalChecked());
-  Set(target, New<String>("parseAsync").ToLocalChecked(), GetFunction(New<FunctionTemplate>(ParseAsync)).ToLocalChecked());
+  Set(target, New<String>("parseSync").ToLocalChecked(),
+      GetFunction(New<FunctionTemplate>(ParseSync)).ToLocalChecked());
+  Set(target, New<String>("parseAsync").ToLocalChecked(),
+      GetFunction(New<FunctionTemplate>(ParseAsync)).ToLocalChecked());
 }
 
 NODE_MODULE(anitomy, InitAddon)

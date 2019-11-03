@@ -13,7 +13,9 @@ With [npm](http://npmjs.org) do:
 npm install anitomy-js
 ```
 
-_anitomy-js_ builds it's dependencies upon installation. Please refer to the [node-gyp documentation](https://github.com/nodejs/node-gyp#installation) if you're having trouble with the build.
+_anitomy-js_ builds it's dependencies upon installation. Please refer to the [node-gyp documentation](https://github.com/nodejs/node-gyp#installation) if you're having problems with the build.
+
+### Changes from version 2.x
 
 Starting with version 2.0, _anitomy-js_ requires C++ 14 to build:
 
@@ -23,7 +25,14 @@ Starting with version 2.0, _anitomy-js_ requires C++ 14 to build:
 
 If you can't update your build tools, all versions from 1.x are compatible with C++ 11.
 
+### Changes from version 3.x
+
 Starting with version 3.0 the old callback style with a single argument is deprecated. You should switch to either use the Promise API or a node style callback (err, data).
+The minimum supported Node version is 6.
+
+### Changes from version 4.x
+
+4.x is a complete rewrite from scratch. Starting with version 4.0 _anitomy-js_ requires at least Node 8. The old callback style API was completely removed and now the _async_ methods exposes only the [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) API.
 
 ## Usage
 

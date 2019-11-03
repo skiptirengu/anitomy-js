@@ -52,7 +52,7 @@
             ],
             "include_dirs": [
                 "<!(node -e \"require('nan')\")",
-                "./lib/anitomy/"
+                "lib/anitomy"
             ]
         }
     ]
