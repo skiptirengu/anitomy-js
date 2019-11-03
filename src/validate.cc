@@ -1,4 +1,5 @@
 #include "validate.hpp"
+#include "util.hpp"
 
 namespace anitomy_js {
 
@@ -14,11 +15,19 @@ using v8::Object;
 using v8::String;
 using v8::Value;
 
-const char *ValidateData(const FunctionCallbackInfo<Value> &args, bool async) {
+const char *ValidateData(const FunctionCallbackInfo<Value> &args, Local<Value> &input, Local<Value> &options) {
+  Local<Value> callback = Undefined();
+  return ValidateData(args, input, options, callback);
+}
+
+const char *ValidateData(const FunctionCallbackInfo<Value> &args, Local<Value> &input, Local<Value> &options,
+                         Local<Value> &callback) {
   auto length = args.Length();
 
   if (length < 1) {
     return "Input must be either a string or array";
+  } else {
+    input = args[0];
   }
 
   auto input_error = ValidateInput(args[0]);
@@ -26,8 +35,7 @@ const char *ValidateData(const FunctionCallbackInfo<Value> &args, bool async) {
     return input_error;
   }
 
-  Local<Value> callback;
-  Local<Value> options;
+  bool async = callback.IsEmpty();
 
   if (async && length == 2) {
     callback = args[1];
@@ -35,6 +43,9 @@ const char *ValidateData(const FunctionCallbackInfo<Value> &args, bool async) {
   } else if (async && length >= 3) {
     callback = args[2];
     options = args[1];
+  } else if (length == 1) {
+    callback = Undefined();
+    options = Undefined();
   } else {
     callback = Undefined();
     options = args[1];
@@ -54,7 +65,7 @@ const char *ValidateData(const FunctionCallbackInfo<Value> &args, bool async) {
 }
 
 const char *ValidateCallback(Local<Value> callback) {
-  if (callback->IsFunction()) {
+  if (!callback->IsFunction()) {
     return "Callback must be a function";
   } else {
     return NULL;
@@ -62,7 +73,7 @@ const char *ValidateCallback(Local<Value> callback) {
 }
 
 const char *ValidateInput(Local<Value> input) {
-  if (!input->IsString() || !input->IsArray()) {
+  if (!input->IsString() && !input->IsArray()) {
     return "Input must be either a string or array";
   } else {
     return NULL;
