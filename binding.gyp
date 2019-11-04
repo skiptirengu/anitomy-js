@@ -25,6 +25,8 @@
                 "src/file_parser.cc",
                 "src/parser_worker.hpp",
                 "src/parser_worker.cc",
+                "src/util.hpp",
+                "src/util.cc",
                 "src/validate.hpp",
                 "src/validate.cc"
             ],

@@ -6,22 +6,21 @@ namespace anitomy_js {
 using Nan::FunctionCallbackInfo;
 using Nan::Get;
 using Nan::Has;
-using Nan::New;
+using Nan::Set;
 using Nan::To;
-using Nan::TypeError;
 using Nan::Undefined;
 using v8::Local;
 using v8::Object;
-using v8::String;
 using v8::Value;
 
-const char *ValidateData(const FunctionCallbackInfo<Value> &args, Local<Value> &input, Local<Value> &options) {
+const char *ValidateData(const FunctionCallbackInfo<Value> &args, Local<Value> &input,
+                         Local<Value> &options) {
   Local<Value> callback = Undefined();
   return ValidateData(args, input, options, callback);
 }
 
-const char *ValidateData(const FunctionCallbackInfo<Value> &args, Local<Value> &input, Local<Value> &options,
-                         Local<Value> &callback) {
+const char *ValidateData(const FunctionCallbackInfo<Value> &args, Local<Value> &input,
+                         Local<Value> &options, Local<Value> &callback) {
   auto length = args.Length();
 
   if (length < 1) {
@@ -80,25 +79,26 @@ const char *ValidateInput(Local<Value> input) {
   }
 }
 
-const char *ValidateOptions(Local<Value> value) {
+const char *ValidateOptions(Local<Value> &value) {
   if (value->IsNullOrUndefined()) {
     return NULL;
   }
 
   if (!value->IsObject()) {
-    return "Options must be an object";
+    value = Undefined();
+    return NULL;
   }
 
-  Local<Object> options = To<Object>(value).ToLocalChecked();
-  Local<String> delimiters = New<String>("allowed_delimiters").ToLocalChecked();
-  Local<String> ignored = New<String>("ignored_strings").ToLocalChecked();
+  auto options = To<Object>(value).ToLocalChecked();
+  auto delimiters = node_string("allowed_delimiters");
+  auto ignored = node_string("ignored_strings");
 
   if (Has(options, delimiters).FromJust() && !Get(options, delimiters).ToLocalChecked()->IsString()) {
-    return "Option \"allowed_delimiters\" must be a string";
+    Set(options, delimiters, Undefined());
   }
 
   if (Has(options, ignored).FromJust() && !Get(options, ignored).ToLocalChecked()->IsArray()) {
-    return "Option \"ignored_strings\" must be an array";
+    Set(options, ignored, Undefined());
   }
 
   return NULL;

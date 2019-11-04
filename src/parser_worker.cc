@@ -3,11 +3,8 @@
 
 namespace anitomy_js {
 
-using Nan::AsyncWorker;
-using Nan::Get;
 using Nan::HandleScope;
 using Nan::Null;
-using Nan::Undefined;
 using v8::Local;
 using v8::Value;
 

@@ -1,5 +1,6 @@
 #include "file_parser.hpp"
 #include "parser_worker.hpp"
+#include "util.hpp"
 #include "validate.hpp"
 #include <nan.h>
 
@@ -11,13 +12,12 @@ using Nan::FunctionCallbackInfo;
 using Nan::GetFunction;
 using Nan::New;
 using Nan::Set;
-using Nan::ThrowError;
+using Nan::ThrowTypeError;
 using Nan::To;
 using Nan::Undefined;
 using v8::Function;
 using v8::FunctionTemplate;
 using v8::Local;
-using v8::String;
 using v8::Value;
 
 void ParseAsync(const FunctionCallbackInfo<Value> &args) {
@@ -25,7 +25,7 @@ void ParseAsync(const FunctionCallbackInfo<Value> &args) {
   auto error = ValidateData(args, input, options, callback);
 
   if (error) {
-    ThrowError(error);
+    ThrowTypeError(error);
     return;
   }
 
@@ -40,21 +40,18 @@ void ParseSync(const FunctionCallbackInfo<Value> &args) {
   auto error = ValidateData(args, input, options);
 
   if (error) {
-    ThrowError(error);
+    ThrowTypeError(error);
     return;
   }
 
   auto parser = new FileParser(input, options);
   parser->Parse();
-  auto result = parser->Result();
-
-  args.GetReturnValue().Set(result);
+  args.GetReturnValue().Set(parser->Result());
 }
 
 NAN_MODULE_INIT(InitAddon) {
-  Set(target, New<String>("parseSync").ToLocalChecked(),
-      GetFunction(New<FunctionTemplate>(ParseSync)).ToLocalChecked());
-  Set(target, New<String>("parseAsync").ToLocalChecked(),
+  Set(target, node_string("parseSync"), GetFunction(New<FunctionTemplate>(ParseSync)).ToLocalChecked());
+  Set(target, node_string("parseAsync"),
       GetFunction(New<FunctionTemplate>(ParseAsync)).ToLocalChecked());
 }
 

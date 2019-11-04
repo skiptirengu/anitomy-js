@@ -7,9 +7,7 @@ namespace anitomy_js {
 
 using Nan::AsyncWorker;
 using Nan::Callback;
-using Nan::New;
 using v8::Local;
-using v8::String;
 using v8::Value;
 
 class ParserWorker : public AsyncWorker {
