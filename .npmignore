@@ -12,3 +12,7 @@ lib/anitomy/.git
 lib/anitomy/test/data.json
 .gitmodules
 .vs/
+.prettierrc.json
+.github/workflows/nodejs.yml
+.eslintrc.json
+debug.js
