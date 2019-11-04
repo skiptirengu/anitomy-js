@@ -10,3 +10,4 @@ jsconfig.json
 .vs/
 package-lock.json
 yarn.lock
+debug.js

@@ -264,10 +264,7 @@
   },
   "Ghost_in_the_Shell_Stand_Alone_Complex_2nd_GIG_Ep05v2_EXCAVATION_[720p,HDTV,x264,AAC_5.1]_-_THORA.mkv": {
     "anime_title": "Ghost in the Shell Stand Alone Complex 2nd GIG",
-    "audio_term": [
-      "AAC",
-      "5.1"
-    ],
+    "audio_term": ["AAC", "5.1"],
     "episode_number": "05",
     "episode_title": "EXCAVATION",
     "file_extension": "mkv",
@@ -280,10 +277,7 @@
   },
   "Ghost_in_the_Shell_Stand_Alone_Complex_2nd_GIG_Ep06_Pu239_[720p,HDTV,x264,AAC_5.1]_-_THORA.mkv": {
     "anime_title": "Ghost in the Shell Stand Alone Complex 2nd GIG",
-    "audio_term": [
-      "AAC",
-      "5.1"
-    ],
+    "audio_term": ["AAC", "5.1"],
     "episode_number": "06",
     "episode_title": "Pu239",
     "file_extension": "mkv",
@@ -390,10 +384,7 @@
   },
   "Detective Conan - 316-317 [DCTP][2411959B].mkv": {
     "anime_title": "Detective Conan",
-    "episode_number": [
-      "316",
-      "317"
-    ],
+    "episode_number": ["316", "317"],
     "file_checksum": "2411959B",
     "file_extension": "mkv",
     "file_name": "Detective Conan - 316-317 [DCTP][2411959B]",
@@ -408,10 +399,7 @@
   },
   "To_Aru_Kagaku_no_Railgun_13-15_[BD_1080p][AtsA]": {
     "anime_title": "To Aru Kagaku no Railgun",
-    "episode_number": [
-      "13",
-      "15"
-    ],
+    "episode_number": ["13", "15"],
     "file_name": "To_Aru_Kagaku_no_Railgun_13-15_[BD_1080p][AtsA]",
     "release_group": "AtsA",
     "source": "BD",
@@ -455,10 +443,7 @@
   },
   "Chrono Crusade ep. 1-5": {
     "anime_title": "Chrono Crusade",
-    "episode_number": [
-      "1",
-      "5"
-    ],
+    "episode_number": ["1", "5"],
     "file_name": "Chrono Crusade ep. 1-5"
   },
   "[gg]_Kimi_ni_Todoke_2nd_Season_-_00_[BF735BC4].mkv": {
@@ -729,10 +714,7 @@
   "Howl's_Moving_Castle_(2004)_[1080p,BluRay,flac,dts,x264]_-_THORA v2.mkv": {
     "anime_title": "Howl's Moving Castle",
     "anime_year": "2004",
-    "audio_term": [
-      "flac",
-      "dts"
-    ],
+    "audio_term": ["flac", "dts"],
     "file_extension": "mkv",
     "file_name": "Howl's_Moving_Castle_(2004)_[1080p,BluRay,flac,dts,x264]_-_THORA v2",
     "release_group": "THORA",
@@ -813,10 +795,7 @@
   },
   "[HorribleSubs] Tsukimonogatari - (01-04) [1080p].mkv": {
     "anime_title": "Tsukimonogatari",
-    "episode_number": [
-      "01",
-      "04"
-    ],
+    "episode_number": ["01", "04"],
     "file_extension": "mkv",
     "file_name": "[HorribleSubs] Tsukimonogatari - (01-04) [1080p]",
     "release_group": "HorribleSubs",
@@ -846,18 +825,12 @@
   },
   "[CH] Sword Art Online Extra Edition Dual Audio [BD 480p][10bitH.264+Vorbis]": {
     "anime_title": "Sword Art Online Extra Edition",
-    "audio_term": [
-      "Dual Audio",
-      "Vorbis"
-    ],
+    "audio_term": ["Dual Audio", "Vorbis"],
     "file_name": "[CH] Sword Art Online Extra Edition Dual Audio [BD 480p][10bitH.264+Vorbis]",
     "release_group": "CH",
     "source": "BD",
     "video_resolution": "480p",
-    "video_term": [
-      "H.264",
-      "10bit"
-    ]
+    "video_term": ["H.264", "10bit"]
   },
   "Episode 14 Ore no Imouto ga Konnani Kawaii Wake ga Nai. (saison 2) VOSTFR": {
     "anime_season": "2",
@@ -967,10 +940,7 @@
     "release_group": "Kira-Fansub",
     "source": "BD",
     "video_resolution": "1280x960",
-    "video_term": [
-      "H264",
-      "24fps"
-    ]
+    "video_term": ["H264", "24fps"]
   },
   "[ANE] Yosuga no Sora - Ep01 Preview (Yorihime ver) [BDRip 1080p x264 FLAC].mkv": {
     "anime_title": "Yosuga no Sora",
@@ -1009,10 +979,7 @@
   "[바카-Raws] Nekomonogatari (Black) #1-4 (BS11 1280x720 x264 AAC).mp4": {
     "anime_title": "Nekomonogatari (Black)",
     "audio_term": "AAC",
-    "episode_number": [
-      "1",
-      "4"
-    ],
+    "episode_number": ["1", "4"],
     "file_extension": "mp4",
     "file_name": "[바카-Raws] Nekomonogatari (Black) #1-4 (BS11 1280x720 x264 AAC)",
     "release_group": "바카-Raws",
@@ -1053,10 +1020,7 @@
     "release_group": "SubDESU-H",
     "release_information": "Complete",
     "video_resolution": "720p",
-    "video_term": [
-      "x264",
-      "8bit"
-    ]
+    "video_term": ["x264", "8bit"]
   },
   "Cyborg 009 (1968) [TSHS] episode 06 [30C15D62].mp4": {
     "anime_title": "Cyborg 009",
@@ -1089,10 +1053,7 @@
   },
   "[FFF] Love Live! The School Idol Movie - PV [D1A15D2C].mkv": {
     "anime_title": "Love Live! The School Idol Movie - PV",
-    "anime_type": [
-      "Movie",
-      "PV"
-    ],
+    "anime_type": ["Movie", "PV"],
     "file_checksum": "D1A15D2C",
     "file_extension": "mkv",
     "file_name": "[FFF] Love Live! The School Idol Movie - PV [D1A15D2C]",
@@ -1234,10 +1195,7 @@
     "file_name": "[EveTaku] AKB0048 Vol.03 - Making of Kibou-ni-Tsuite Music Video (BDRip 1080i H.264-Hi10P FLAC)[C09462E2]",
     "release_group": "EveTaku",
     "source": "BDRip",
-    "video_term": [
-      "H.264",
-      "Hi10P"
-    ],
+    "video_term": ["H.264", "Hi10P"],
     "volume_number": "03"
   },
   "[DmonHiro] Magi - The Labyrinth Of Magic - Vol.1v2 (BD, 720p)": {
@@ -1258,41 +1216,26 @@
     "source": "BD",
     "video_term": "x264",
     "video_resolution": "1280x720",
-    "volume_number": [
-      "1",
-      "2"
-    ]
+    "volume_number": ["1", "2"]
   },
   "[Tsundere] Hyouka - 01v2-04 [BDRip h264 1920x1080 10bit FLAC]": {
     "anime_title": "Hyouka",
     "audio_term": "FLAC",
-    "episode_number": [
-      "01",
-      "04"
-    ],
+    "episode_number": ["01", "04"],
     "file_name": "[Tsundere] Hyouka - 01v2-04 [BDRip h264 1920x1080 10bit FLAC]",
     "release_group": "Tsundere",
     "release_version": "2",
     "source": "BDRip",
     "video_resolution": "1920x1080",
-    "video_term": [
-      "h264",
-      "10bit"
-    ]
+    "video_term": ["h264", "10bit"]
   },
   "[Doki] Nogizaka Haruka no Himitsu - Purezza - 01v2-03v2 (1280x720 h264 AAC)": {
     "anime_title": "Nogizaka Haruka no Himitsu - Purezza",
     "audio_term": "AAC",
-    "episode_number": [
-      "01",
-      "03"
-    ],
+    "episode_number": ["01", "03"],
     "file_name": "[Doki] Nogizaka Haruka no Himitsu - Purezza - 01v2-03v2 (1280x720 h264 AAC)",
     "release_group": "Doki",
-    "release_version": [
-      "2",
-      "2"
-    ],
+    "release_version": ["2", "2"],
     "video_resolution": "1280x720",
     "video_term": "h264"
   },
@@ -1328,17 +1271,11 @@
     "source": "BD",
     "video_resolution": "1080p",
     "video_term": "10bit",
-    "volume_number": [
-      "1",
-      "2"
-    ]
+    "volume_number": ["1", "2"]
   },
   "[HorribleSubs] Momokuri - 01+02 [720p]": {
     "anime_title": "Momokuri",
-    "episode_number": [
-      "01",
-      "02"
-    ],
+    "episode_number": ["01", "02"],
     "file_name": "[HorribleSubs] Momokuri - 01+02 [720p]",
     "release_group": "HorribleSubs",
     "video_resolution": "720p"
@@ -1352,10 +1289,7 @@
   "Dragon_Ball_Z_Movies_8_&_10_[720p,BluRay,DTS,x264]_-_THORA": {
     "anime_title": "Dragon Ball Z Movies",
     "audio_term": "DTS",
-    "episode_number": [
-      "8",
-      "10"
-    ],
+    "episode_number": ["8", "10"],
     "file_name": "Dragon_Ball_Z_Movies_8_&_10_[720p,BluRay,DTS,x264]_-_THORA",
     "release_group": "THORA",
     "source": "BluRay",

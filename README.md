@@ -15,9 +15,13 @@ npm install anitomy-js
 
 _anitomy-js_ builds it's dependencies upon installation. Please refer to the [node-gyp documentation](https://github.com/nodejs/node-gyp#installation) if you're having problems with the build.
 
+### Version 1.x
+
+Starting with version 1.0 the minimum supported Node version is 0.12
+
 ### Changes from version 2.x
 
-Starting with version 2.0, _anitomy-js_ requires C++ 14 to build:
+Starting with version 2.0, _anitomy-js_ requires C++ 14 and at least Node 4:
 
 - Linux: GCC/G++ >= 5
 - Windows: Visual Studio >= 2015
@@ -32,7 +36,7 @@ The minimum supported Node version is 6.
 
 ### Changes from version 4.x
 
-4.x is a complete rewrite from scratch. Starting with version 4.0 _anitomy-js_ requires at least Node 8. The old callback style API was completely removed and now the _async_ methods exposes only the [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) API.
+4.x is a complete rewrite from scratch and requires at least Node 8. The old callback style API was completely removed and now the _async_ methods (parse and parseAsync) exposes only the [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) API.
 
 ## Usage
 
@@ -51,12 +55,10 @@ Additionally you can pass an object as the last parameter to change Anitomy's or
 ### parse(data, [callback], [options]) -> Promise\<any>
 
 ```js
-var anitomy = require("anitomy-js");
+var anitomy = require('anitomy-js')
 anitomy
-  .parse(
-    "[tlacatlc6] Natsume Yuujinchou Shi Vol. 1v2 & Vol. 2 (BD 1280x720 x264 AAC)"
-  )
-  .then(data => console.log(data));
+  .parse('[tlacatlc6] Natsume Yuujinchou Shi Vol. 1v2 & Vol. 2 (BD 1280x720 x264 AAC)')
+  .then((data) => console.log(data))
 ```
 
 ... would be parsed into
@@ -78,12 +80,12 @@ anitomy
 ### parseSync(data, [options]) -> any
 
 ```js
-var anitomy = require("anitomy-js");
+var anitomy = require('anitomy-js')
 var filenames = [
-  "[DmonHiro] Magi - The Labyrinth Of Magic - Vol.1v2 (BD, 720p)",
-  "[KLF]_D.Gray-man_04V2.avi"
-];
-console.log(anitomy.parseSync(filenames));
+  '[DmonHiro] Magi - The Labyrinth Of Magic - Vol.1v2 (BD, 720p)',
+  '[KLF]_D.Gray-man_04V2.avi'
+]
+console.log(anitomy.parseSync(filenames))
 ```
 
 ... would be parsed into
