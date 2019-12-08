@@ -33,17 +33,17 @@
     "format": "clang-format -i -style=file src/*.*"
   },
   "devDependencies": {
-    "@types/chai": "^4.2.4",
+    "@types/chai": "^4.2.6",
     "@types/chai-as-promised": "^7.1.2",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
-    "eslint": "^6.6.0",
-    "eslint-config-prettier": "^6.5.0",
+    "eslint": "^6.7.2",
+    "eslint-config-prettier": "^6.7.0",
     "eslint-plugin-prettier": "^3.1.1",
     "mocha": "^6.2.2",
     "node-gyp": "^6.0.1",
     "pre-commit": "^1.2.2",
-    "prettier": "^1.18.2"
+    "prettier": "^1.19.1"
   },
   "engines": {
     "node": ">=8"
