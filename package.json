@@ -30,7 +30,7 @@
     "build": "node-gyp rebuild",
     "lint": "eslint index.js test/",
     "lint:fix": "eslint index.js test/ --fix",
-    "format:cpp": "clang-format -i -style=file src/*.*"
+    "format": "clang-format -i -style=file src/*.*"
   },
   "devDependencies": {
     "@types/chai": "^4.2.4",
@@ -49,7 +49,7 @@
     "node": ">=8"
   },
   "pre-commit": [
-    "format:cpp",
+    "format",
     "lint:fix",
     "test"
   ]
