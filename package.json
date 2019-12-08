@@ -42,9 +42,15 @@
     "eslint-plugin-prettier": "^3.1.1",
     "mocha": "^6.2.2",
     "node-gyp": "^6.0.1",
+    "pre-commit": "^1.2.2",
     "prettier": "^1.18.2"
   },
   "engines": {
     "node": ">=8"
-  }
+  },
+  "pre-commit": [
+    "format:cpp",
+    "lint:fix",
+    "test"
+  ]
 }
