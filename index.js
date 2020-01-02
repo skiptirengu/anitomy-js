@@ -1,5 +1,5 @@
 const { promisify } = require('util')
-const anitomy = require('./build/Release/anitomy-js')
+const anitomy = require('./build/Release/anitomy-js.node')
 
 const nativeParseAsync = promisify(anitomy.parseAsync)
 const nativeParseSync = anitomy.parseSync

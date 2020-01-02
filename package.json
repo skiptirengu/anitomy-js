@@ -1,6 +1,6 @@
 {
   "name": "anitomy-js",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "main": "index.js",
   "description": "Node.js wrapper for anitomy",
   "license": "MIT",
@@ -33,13 +33,13 @@
     "format": "clang-format -i -style=file src/*.*"
   },
   "devDependencies": {
-    "@types/chai": "^4.2.6",
+    "@types/chai": "^4.2.7",
     "@types/chai-as-promised": "^7.1.2",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
-    "eslint": "^6.7.2",
-    "eslint-config-prettier": "^6.7.0",
-    "eslint-plugin-prettier": "^3.1.1",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.9.0",
+    "eslint-plugin-prettier": "^3.1.2",
     "mocha": "^6.2.2",
     "node-gyp": "^6.0.1",
     "pre-commit": "^1.2.2",
