@@ -43,7 +43,7 @@
     "mocha": "^7.1.1",
     "node-gyp": "^6.1.0",
     "pre-commit": "^1.2.2",
-    "prettier": "^2.0.2"
+    "prettier": "^1.19.1"
   },
   "engines": {
     "node": ">=8"
