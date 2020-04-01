@@ -37,18 +37,12 @@ declare module 'anitomy-js' {
     unknown?: string
   }
 
-  export interface Anitomy {
-    parse(input: string, options?: AnitomyOptions): Promise<AnitomyResult>
-    parseAsync(input: string, options?: AnitomyOptions): Promise<AnitomyResult>
+  export function parse(input: string, options?: AnitomyOptions): Promise<AnitomyResult>
+  export function parseAsync(input: string, options?: AnitomyOptions): Promise<AnitomyResult>
 
-    parse(input: string[], options?: AnitomyOptions): Promise<AnitomyResult[]>
-    parseAsync(input: string[], options?: AnitomyOptions): Promise<AnitomyResult[]>
+  export function parse(input: string[], options?: AnitomyOptions): Promise<AnitomyResult[]>
+  export function parseAsync(input: string[], options?: AnitomyOptions): Promise<AnitomyResult[]>
 
-    parseSync(input: string, options?: AnitomyOptions): AnitomyResult
-    parseSync(input: string[], options?: AnitomyOptions): AnitomyResult[]
-  }
-
-  const anitomy: Anitomy
-
-  export default anitomy
+  export function parseSync(input: string, options?: AnitomyOptions): AnitomyResult
+  export function parseSync(input: string[], options?: AnitomyOptions): AnitomyResult[]
 }
