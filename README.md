@@ -41,9 +41,9 @@ The minimum supported Node version is 6.
 ## Usage
 
 _anitomy-js_ provides two methods: `parse` and `parseSync`.
-Both methods accept single filename input or, an array of filenames for batch parsing.
+Both methods accept single filename input or an array of filenames for batch parsing.
 
-Additionally you can pass an object as the last parameter to change Anitomy's original parsing options. The options are the following:
+Additionally you can pass an object as the last parameter to change Anitomy's original parsing options. The options are:
 
 - `allowed_delimiters` - defaults to `" _.&+,|"`
 - `ignored_strings` - defaults to `[]`
@@ -52,7 +52,7 @@ Additionally you can pass an object as the last parameter to change Anitomy's or
 - `parse_file_extension` - defaults to `true`
 - `parse_release_group` - defaults to `true`
 
-### parse(data, [callback], [options]) -> Promise\<any>
+### parse(data, [options]) -> Promise\<AnitomyResult | AnitomyResult[]>
 
 ```js
 var anitomy = require('anitomy-js')
@@ -77,7 +77,7 @@ anitomy
 }
 ```
 
-### parseSync(data, [options]) -> any
+### parseSync(data, [options]) -> AnitomyResult | AnitomyResult[]
 
 ```js
 var anitomy = require('anitomy-js')
