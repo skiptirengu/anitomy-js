@@ -18,7 +18,8 @@ Napi::Value ParseAsync(const Napi::CallbackInfo &info) {
 
   if (error) {
     auto deferred = Promise::Deferred::New(env);
-    deferred.Reject(node_string(env, error));
+    auto node_error = Napi::Error::New(env, error);
+    deferred.Reject(node_error.Value());
     return deferred.Promise();
   }
 

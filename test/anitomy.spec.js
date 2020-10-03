@@ -140,7 +140,10 @@ describe('anitomy-js', function () {
     })
 
     it('should throw an exception for wrong datatypes (files)', function () {
-      return expect(anitomy.parseAsync(1)).be.rejectedWith('Input must be either a string or array')
+      return expect(anitomy.parseAsync(1)).be.rejectedWith(
+        Error,
+        'Input must be either a string or array'
+      )
     })
 
     it('should not throw and return empty object', function () {
