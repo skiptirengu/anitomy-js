@@ -40,7 +40,7 @@ The minimum supported Node version is 6.
 
 ### Changes from version 5.x
 
-On version 5.x, _anitomy-js_ switched from using the [NAN](https://github.com/nodejs/nan), to the newer [NAPI](https://github.com/nodejs/node-addon-api).
+On version 5.x, _anitomy-js_ switched from using [NAN](https://github.com/nodejs/nan), to the newer [NAPI](https://github.com/nodejs/node-addon-api).
 With this change, all context-related issues should be fixed.
 
 ## Usage
