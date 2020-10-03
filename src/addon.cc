@@ -2,59 +2,58 @@
 #include "parser_worker.hpp"
 #include "util.hpp"
 #include "validate.hpp"
-#include <nan.h>
+#include <napi.h>
 
 namespace anitomy_js {
 
-using Nan::AsyncQueueWorker;
-using Nan::Callback;
-using Nan::FunctionCallbackInfo;
-using Nan::GetFunction;
-using Nan::New;
-using Nan::Set;
-using Nan::ThrowTypeError;
-using Nan::To;
-using Nan::Undefined;
-using v8::Function;
-using v8::FunctionTemplate;
-using v8::Local;
-using v8::Value;
+using Napi::Promise;
 
-void ParseAsync(const FunctionCallbackInfo<Value> &args) {
-  Local<Value> input, options, callback;
-  auto error = ValidateData(args, input, options, callback);
+Napi::Value ParseAsync(const Napi::CallbackInfo &info) {
+  auto env = info.Env();
+
+  Napi::Value input;
+  Napi::Object options;
+
+  auto error = ParseAndValidate(info, input, options);
 
   if (error) {
-    ThrowTypeError(error);
-    return;
+    auto deferred = Promise::Deferred::New(env);
+    auto node_error = Napi::Error::New(env, error);
+    deferred.Reject(node_error.Value());
+    return deferred.Promise();
   }
 
-  auto *cb = new Callback(To<Function>(callback).ToLocalChecked());
-  AsyncQueueWorker(new ParserWorker(input, options, cb));
+  auto worker = new ParserWorker(env, input, options);
+  worker->Queue();
 
-  args.GetReturnValue().Set(Undefined());
+  return worker->GetPromise();
 }
 
-void ParseSync(const FunctionCallbackInfo<Value> &args) {
-  Local<Value> input, options;
-  auto error = ValidateData(args, input, options);
+Napi::Value ParseSync(const Napi::CallbackInfo &info) {
+  auto env = info.Env();
+
+  Napi::Value input;
+  Napi::Object options;
+
+  auto error = ParseAndValidate(info, input, options);
 
   if (error) {
-    ThrowTypeError(error);
-    return;
+    Napi::TypeError::New(env, error).ThrowAsJavaScriptException();
+    return env.Undefined();
   }
 
-  auto parser = new FileParser(input, options);
+  auto parser = new FileParser(env, input, options);
   parser->Parse();
-  args.GetReturnValue().Set(parser->Result());
+
+  return parser->Result();
 }
 
-NAN_MODULE_INIT(InitAddon) {
-  Set(target, node_string("parseSync"), GetFunction(New<FunctionTemplate>(ParseSync)).ToLocalChecked());
-  Set(target, node_string("parseAsync"),
-      GetFunction(New<FunctionTemplate>(ParseAsync)).ToLocalChecked());
+Napi::Object Init(Napi::Env env, Napi::Object exports) {
+  exports.Set(node_string(env, "parseSync"), Napi::Function::New(env, ParseSync));
+  exports.Set(node_string(env, "parseAsync"), Napi::Function::New(env, ParseAsync));
+  return exports;
 }
 
-NODE_MODULE(anitomy, InitAddon)
+NODE_API_MODULE(anitomy, Init);
 
 } // namespace anitomy_js
