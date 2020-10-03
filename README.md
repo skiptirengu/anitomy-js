@@ -38,6 +38,11 @@ The minimum supported Node version is 6.
 
 4.x is a complete rewrite from scratch and requires at least Node 8. The old callback style API was completely removed and now the _async_ methods (parse and parseAsync) exposes only the [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) API.
 
+### Changes from version 5.x
+
+On version 5.x, _anitomy-js_ switched from using the [NAN](https://github.com/nodejs/nan), to the newer [NAPI](https://github.com/nodejs/node-addon-api).
+With this change, all context-related issues should be fixed.
+
 ## Usage
 
 _anitomy-js_ provides two methods: `parse` and `parseSync`.
@@ -83,7 +88,7 @@ anitomy
 var anitomy = require('anitomy-js')
 var filenames = [
   '[DmonHiro] Magi - The Labyrinth Of Magic - Vol.1v2 (BD, 720p)',
-  '[KLF]_D.Gray-man_04V2.avi'
+  '[KLF]_D.Gray-man_04V2.avi',
 ]
 console.log(anitomy.parseSync(filenames))
 ```
