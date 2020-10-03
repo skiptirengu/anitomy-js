@@ -3,21 +3,18 @@
 
 namespace anitomy_js {
 
-using Nan::HandleScope;
-using Nan::Null;
-using v8::Local;
-using v8::Value;
-
 void ParserWorker::Execute() { this->_parser.Parse(); }
 
-void ParserWorker::HandleOKCallback() {
-  HandleScope scope;
-  auto output = this->_parser.Result();
-  Local<Value> argv[] = {
-      Null(),
-      output,
-  };
-  callback->Call(2, argv, async_resource);
+void ParserWorker::OnOK() {
+  auto result = _parser.Result();
+  _deferred.Resolve(result);
 }
+
+void ParserWorker::OnError(Napi::Error const &error) {
+  auto result = error.Value();
+  _deferred.Reject(result);
+}
+
+Napi::Promise ParserWorker::GetPromise() { return _deferred.Promise(); }
 
 } // namespace anitomy_js

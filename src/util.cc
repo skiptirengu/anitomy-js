@@ -2,19 +2,15 @@
 
 namespace anitomy_js {
 
-using Nan::Get;
 using std::function;
-using v8::Array;
-using v8::Local;
-using v8::Value;
 
-void MapNodeArray(Local<Value> value, function<void(Local<Value>)> callback) {
-  if (!value->IsArray()) {
+void MapNodeArray(Napi::Value value, function<void(Napi::Value)> callback) {
+  if (!value.IsArray()) {
     return;
   }
-  auto array = Local<Array>::Cast(value);
-  for (unsigned int i = 0; i < array->Length(); i++) {
-    auto current = Get(array, i).ToLocalChecked();
+  auto array = value.As<Napi::Array>();
+  for (unsigned int i = 0; i < array.Length(); i++) {
+    auto current = array.Get(i);
     callback(current);
   }
 }

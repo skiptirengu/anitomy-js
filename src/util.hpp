@@ -3,12 +3,16 @@
 #include <codecvt>
 #include <functional>
 #include <locale>
-#include <nan.h>
+#include <napi.h>
 #include <string>
 
 namespace anitomy_js {
 
 typedef std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> wstring_cvt;
+
+inline Napi::String node_string(const Napi::Env env, const char *str) {
+  return Napi::String::New(env, str);
+}
 
 inline std::string wstring_to_string(const std::wstring &input) {
   static wstring_cvt conv;
@@ -20,19 +24,18 @@ inline std::wstring string_to_wstring(const std::string &input) {
   return conv.from_bytes(input);
 }
 
-inline v8::Local<v8::String> wstring_to_node_string(const std::wstring &str) {
-  return Nan::New(wstring_to_string(str)).ToLocalChecked();
+inline Napi::String wstring_to_node_string(const Napi::Env env, const std::wstring &str) {
+  return node_string(env, wstring_to_string(str).c_str());
 }
 
-inline std::wstring node_string_to_wstring(const v8::Local<v8::Value> value) {
-  Nan::Utf8String str(value);
-  return str.length() > 0 ? string_to_wstring(*str) : L"";
+inline std::wstring node_string_to_wstring(const Napi::Value value) {
+  if (value.IsString()) {
+    auto str = value.ToString().Utf8Value();
+    return str.size() > 0 ? string_to_wstring(str) : L"";
+  }
+  return L"";
 }
 
-inline v8::Local<v8::String> node_string(const char *str) {
-  return Nan::New<v8::String>(str).ToLocalChecked();
-}
-
-void MapNodeArray(v8::Local<v8::Value> value, std::function<void(v8::Local<v8::Value>)> callback);
+void MapNodeArray(Napi::Value value, std::function<void(Napi::Value)> callback);
 
 } // namespace anitomy_js

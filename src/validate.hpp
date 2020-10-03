@@ -1,22 +1,10 @@
 #pragma once
 
-#include <nan.h>
+#include <napi.h>
 
 namespace anitomy_js {
 
-using Nan::FunctionCallbackInfo;
-using v8::Local;
-using v8::Value;
-
 // external validation functions
-const char *ValidateData(const FunctionCallbackInfo<Value> &args, Local<Value> &input,
-                         Local<Value> &options);
-const char *ValidateData(const FunctionCallbackInfo<Value> &args, Local<Value> &input,
-                         Local<Value> &options, Local<Value> &callback);
-
-// internal usage
-const char *ValidateCallback(Local<Value> callback);
-const char *ValidateInput(Local<Value> input);
-const char *ValidateOptions(Local<Value> &value);
+const char *ParseAndValidate(const Napi::CallbackInfo &args, Napi::Value &input, Napi::Object &options);
 
 } // namespace anitomy_js

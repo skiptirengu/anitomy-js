@@ -1,26 +1,30 @@
 #pragma once
 
 #include "file_parser.hpp"
-#include <nan.h>
+#include <napi.h>
 
 namespace anitomy_js {
 
-using Nan::AsyncWorker;
-using Nan::Callback;
-using v8::Local;
-using v8::Value;
+using Napi::Promise;
 
-class ParserWorker : public AsyncWorker {
+class ParserWorker : public Napi::AsyncWorker {
 public:
-  ParserWorker(const Local<Value> input, const Local<Value> options, Callback *callback)
-      : AsyncWorker(callback, "anitomy_js::ParserWorker"), _parser(input, options) {}
+  ParserWorker(const Napi::Env &env, const Napi::Value &input, const Napi::Value &options)
+      : AsyncWorker(env, "anitomy_js::ParserWorker"), _parser(env, input, options),
+        _deferred(Promise::Deferred::New(env)) {
+    //
+  }
+
   ~ParserWorker() = default;
 
   void Execute() override;
-  void HandleOKCallback() override;
+  void OnOK() override;
+  void OnError(Napi::Error const &error) override;
+  Napi::Promise GetPromise();
 
 private:
   FileParser _parser;
+  Promise::Deferred _deferred;
 };
 
 } // namespace anitomy_js

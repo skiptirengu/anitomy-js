@@ -6,27 +6,16 @@ namespace anitomy_js {
 using anitomy::ElementCategory;
 using anitomy::Elements;
 using anitomy::string_t;
-using Nan::Get;
-using Nan::Has;
-using Nan::New;
-using Nan::Set;
-using Nan::To;
 using std::function;
 using std::size_t;
-using v8::Array;
-using v8::Boolean;
-using v8::Local;
-using v8::Object;
-using v8::String;
-using v8::Value;
 
-FileParser::FileParser(Local<Value> input, Local<Value> options) {
-  this->_batch = input->IsArray();
+FileParser::FileParser(Napi::Env env, Napi::Value input, Napi::Value options) : _env(env) {
+  this->_batch = input.IsArray();
 
   // convert node strings to string_t
-  MapNodeArray(this->CoerceArray(input), [this](const auto current) {
-    auto str = To<String>(current).ToLocalChecked();
-    this->_input.emplace_back(node_string_to_wstring(str));
+  MapNodeArray(this->CoerceArray(input), [this](const Napi::Value current) {
+    auto str = node_string_to_wstring(current);
+    this->_input.emplace_back(str);
   });
 
   auto &an_options = this->_anitomy.options();
@@ -41,50 +30,53 @@ FileParser::FileParser(Local<Value> input, Local<Value> options) {
   this->SetBoolOption(options, "parse_episode_number", an_options.parse_episode_number);
 }
 
-void FileParser::SetStringVectorOption(Local<Value> options, const char *key, vector<string_t> &val) {
+void FileParser::SetStringVectorOption(Napi::Value options, const char *key, vector<string_t> &val) {
   val.clear();
   this->SafeSetOption(options, key, [&val](auto const value) {
-    MapNodeArray(value, [&val](const auto curr) { val.emplace_back(node_string_to_wstring(curr)); });
+    MapNodeArray(value, [&val](const auto curr) {
+      auto str = node_string_to_wstring(curr);
+      val.emplace_back(str);
+    });
   });
 }
 
-void FileParser::SetStringOption(Local<Value> options, const char *key, string_t &val) {
+void FileParser::SetStringOption(Napi::Value options, const char *key, string_t &val) {
   this->SafeSetOption(options, key, [&val](auto const value) {
-    if (value->IsString()) {
+    if (value.IsString()) {
       val = node_string_to_wstring(value);
     }
   });
 }
 
-void FileParser::SetBoolOption(Local<Value> options, const char *key, bool &val) {
-  this->SafeSetOption(options, key, [&val](auto const value) {
-    if (value->IsBoolean()) {
-      val = Local<Boolean>::Cast(value)->Value();
+void FileParser::SetBoolOption(Napi::Value options, const char *key, bool &val) {
+  this->SafeSetOption(options, key, [&val](const Napi::Value value) {
+    if (value.IsBoolean()) {
+      val = value.ToBoolean().Value();
     }
   });
 }
 
-void FileParser::SafeSetOption(Local<Value> options, const char *key,
-                               function<void(Local<Value>)> callback) {
-  if (!options->IsObject()) {
+void FileParser::SafeSetOption(Napi::Value options, const char *key,
+                               function<void(Napi::Value)> callback) {
+  if (!options.IsObject()) {
     return;
   }
-  auto object = To<Object>(options).ToLocalChecked();
-  auto node_key = node_string(key);
-  if (!Has(object, node_key).FromJust()) {
+  auto object = options.ToObject();
+  auto node_key = node_string(this->_env, key);
+  if (!object.Has(node_key)) {
     return;
-  } else {
-    auto value = Get(object, node_key).ToLocalChecked();
-    callback(value);
   }
+  auto value = object.Get(node_key);
+  callback(value);
 }
 
-Local<Value> FileParser::CoerceArray(Local<Value> value) {
-  if (value->IsArray()) {
+Napi::Value FileParser::CoerceArray(Napi::Value value) {
+  if (value.IsArray()) {
     return value;
   } else {
-    auto array = New<Array>(1);
-    Set(array, 0, value);
+    auto array = Napi::Array::New(this->_env, 1);
+    array[(uint32_t)0] = value;
+    array.Set(Napi::Number::New(this->_env, 0.0), value);
     return array;
   }
 }
@@ -97,46 +89,46 @@ void FileParser::Parse() {
   }
 }
 
-Local<Value> FileParser::Result() {
+Napi::Value FileParser::Result() {
   auto length = this->_output.size();
-  Local<Array> result = New<Array>(length);
+  Napi::Array result = Napi::Array::New(this->_env, length);
   for (size_t i = 0; i < length; i++) {
     const auto &elements = this->_output[i];
     const auto object = BuildObject(elements);
-    Set(result, i, object);
+    result[i] = object;
   }
-  return this->_batch ? Local<Value>::Cast(result) : Get(result, 0).ToLocalChecked();
+  return this->_batch ? result.As<Napi::Value>() : result[(uint32_t)0];
 }
 
-void FileParser::AddKey(Local<Object> &object, const char *entry, const Elements &elements,
+void FileParser::AddKey(Napi::Object &object, const char *entry, const Elements &elements,
                         ElementCategory pos) {
-  auto name = New<String>(entry).ToLocalChecked();
+  auto name = node_string(this->_env, entry);
   switch (elements.count(pos)) {
   case 0:
     break;
   case 1: {
     auto value = elements.get(pos);
-    Set(object, name, wstring_to_node_string(value));
+    object.Set(name, wstring_to_node_string(this->_env, value));
     break;
   }
   default:
-    Set(object, name, this->MultipleElements(elements, pos));
+    object.Set(name, this->MultipleElements(elements, pos));
   }
 }
 
-Local<Array> FileParser::MultipleElements(const Elements &elements, ElementCategory pos) {
+Napi::Array FileParser::MultipleElements(const Elements &elements, ElementCategory pos) {
   auto array = elements.get_all(pos);
-  auto output = New<Array>(array.size());
+  auto output = Napi::Array::New(this->_env, array.size());
   unsigned int index = 0;
   for (string_t value : array) {
-    Set(output, index, wstring_to_node_string(value));
+    output[index] = wstring_to_node_string(this->_env, value);
     index++;
   }
   return output;
 }
 
-Local<Object> FileParser::BuildObject(const Elements &elements) {
-  auto object = New<Object>();
+Napi::Object FileParser::BuildObject(const Elements &elements) {
+  auto object = Napi::Object::New(this->_env);
   this->AddKey(object, "anime_season", elements, ElementCategory::kElementAnimeSeason);
   this->AddKey(object, "season_prefix", elements, ElementCategory::kElementAnimeSeasonPrefix);
   this->AddKey(object, "anime_title", elements, ElementCategory::kElementAnimeTitle);
