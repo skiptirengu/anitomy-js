@@ -38,6 +38,19 @@
           "ExceptionHandling": 0
         }
       },
+      "conditions": [
+        [
+          "OS==\"mac\"",
+          {
+            "cflags+": [
+              "-fvisibility=hidden"
+            ],
+            "xcode_settings": {
+              "GCC_SYMBOLS_PRIVATE_EXTERN": "YES"
+            }
+          }
+        ]
+      ],
       "xcode_settings": {
         "CLANG_CXX_LANGUAGE_STANDARD": "c++14",
         "CLANG_CXX_LIBRARY": "libc++",
