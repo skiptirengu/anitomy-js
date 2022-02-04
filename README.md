@@ -5,6 +5,12 @@
 
 _anitomy-js_ is a Node.js wrapper for [Anitomy](https://github.com/erengy/anitomy) - a C++ library for parsing anime video filenames.
 
+## Requirements
+
++ Linux: gcc/g++ >= 5
++ Windows: Visual Studio >= 2015 (With C++ build tools)
++ Mac OS >= 10.9 (with Xcode installed, of course)
+
 ## Installation
 
 With [npm](http://npmjs.org) do:
