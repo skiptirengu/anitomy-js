@@ -82,7 +82,7 @@ Napi::Value FileParser::CoerceArray(Napi::Value value) {
 }
 
 void FileParser::Parse() {
-  for (const auto value : this->_input) {
+  for (const auto &value : this->_input) {
     this->_anitomy.Parse(value);
     auto elements = this->_anitomy.elements();
     this->_output.emplace_back(elements);
