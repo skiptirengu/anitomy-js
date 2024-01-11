@@ -9,5 +9,5 @@ jsconfig.json
 .DS_Store
 .vs/
 package-lock.json
-yarn.lock
 debug.js
+.yarn
