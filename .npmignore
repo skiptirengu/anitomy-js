@@ -16,3 +16,4 @@ lib/anitomy/test/data.json
 .github/workflows/nodejs.yml
 .eslintrc.json
 debug.js
+.yarn
